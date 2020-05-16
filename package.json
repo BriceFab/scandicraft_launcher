@@ -2,18 +2,30 @@
   "name": "scandicraft_launcher",
   "version": "1.0.0",
   "description": "ScandiCraft Launcher",
-  "main": "src/index.js",
+  "main": "public/main.js",
   "scripts": {
+    "pack-dev": "npx webpack --config webpack.dev.js",
+    "pack-prod": "npx webpack --config webpack.prod.js",
     "start": "electron ."
   },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "electron": "^8.3.0",
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "author": "Riva Fabrice",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/fabrriva/scandicraft_launcher.git"
   },
-  "author": "Riva Fabrice",
-  "private": true,
-  "license": "proprietary",
-  "devDependencies": {
-    "electron": "^8.3.0"
-  }
+  "license": "proprietary"
 }
