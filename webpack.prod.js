@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // Config directories
 const SRC_DIR = path.resolve(__dirname, 'src');
@@ -39,5 +40,6 @@ module.exports = {
             template: 'public/index.html',
             inject: 'body'
         }),
+        new CleanWebpackPlugin(),
     ]
 };
