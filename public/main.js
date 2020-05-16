@@ -1,13 +1,9 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path');
-const url = require('url')
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
     dev = true;
 }
-
-console.log('dev: ' + dev)
 
 function createWindow() {
     // Cree la fenetre du navigateur.
@@ -22,14 +18,11 @@ function createWindow() {
 
     // et charger le fichier index.html de l'application.
     win.loadFile('dist/index.html')
-    // win.loadURL(url.format({
-    //     protocol: 'file:',
-    //     pathname: path.join(__dirname, 'dist', 'index.html'),
-    //     slashes: true
-    // }));
 
     // Ouvre les DevTools.
-    win.webContents.openDevTools()
+    if (dev) {
+        win.webContents.openDevTools()
+    }
 }
 
 app.allowRendererProcessReuse = true;

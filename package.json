@@ -6,6 +6,7 @@
   "scripts": {
     "pack-dev": "npx webpack --config webpack.dev.js",
     "pack-prod": "npx webpack --config webpack.prod.js",
+    "build": "electron-builder build --win --x64",
     "start": "electron ."
   },
   "devDependencies": {
@@ -14,6 +15,7 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "electron": "^8.3.0",
+    "electron-builder": "^22.6.0",
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
@@ -24,11 +26,56 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
-  "author": "Riva Fabrice",
+  "build": {
+    "productName": "ScandiCraft",
+    "appId": "fr.scandicraft-mc",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "public/main.js",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.games"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "msi"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "build"
+    }
+  },
+  "author": {
+    "name": "BriceFab",
+    "email": "bricefab123@gmail.com"
+  },
   "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/fabrriva/scandicraft_launcher.git"
   },
-  "license": "proprietary"
+  "license": "UNLICENSED"
 }
