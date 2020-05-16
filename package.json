@@ -1,0 +1,19 @@
+{
+  "name": "scandicraft_launcher",
+  "version": "1.0.0",
+  "description": "ScandiCraft Launcher",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/fabrriva/scandicraft_launcher.git"
+  },
+  "author": "Riva Fabrice",
+  "private": true,
+  "license": "proprietary",
+  "devDependencies": {
+    "electron": "^8.3.0"
+  }
+}
