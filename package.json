@@ -10,7 +10,8 @@
     "build-win32": "npm run pack-prod && electron-builder build --win --x32",
     "build-mac": "npm run pack-prod && electron-builder build --mac",
     "build-linux": "npm run pack-prod && electron-builder build --linux",
-    "start": "electron ."
+    "start": "electron .",
+    "start-e": "electron ./dist/electron.bundle.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

@@ -8,11 +8,15 @@ const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
     mode: 'development',
-    entry: SRC_DIR + '/index.js',
+    target: 'electron-main',
+    entry: {
+        react: SRC_DIR + '/index.js',
+        electron: path.resolve(__dirname, 'src-electron') + '/index.js'
+    },
     output: {
         path: OUTPUT_DIR,
         publicPath: './',
-        filename: 'bundle.js'
+        filename: '[name].bundle.js'
     },
     devtool: 'inline-source-map',
     watch: true,
@@ -39,7 +43,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: 'public/index.html',
-            inject: 'body'
+            inject: 'body',
+            chunks: ['react']
         }),
     ],
     devServer: {
