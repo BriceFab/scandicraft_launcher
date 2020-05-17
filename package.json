@@ -1,12 +1,15 @@
 {
   "name": "scandicraft_launcher",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "ScandiCraft Launcher",
-  "main": "public/index.js",
+  "main": "src-electron/index.js",
   "scripts": {
     "pack-dev": "npx webpack --config webpack.dev.js",
     "pack-prod": "npx webpack --config webpack.prod.js",
-    "build": "electron-builder build --win --x64",
+    "build-win64": "npm run pack-prod && electron-builder build --win --x64",
+    "build-win32": "npm run pack-prod && electron-builder build --win --x32",
+    "build-mac": "npm run pack-prod && electron-builder build --mac",
+    "build-linux": "npm run pack-prod && electron-builder build --linux",
     "start": "electron ."
   },
   "devDependencies": {
@@ -35,11 +38,15 @@
     "files": [
       "dist/",
       "node_modules/",
-      "public/main.js",
+      "src-electron/",
       "package.json"
     ],
     "mac": {
-      "category": "public.app-category.games"
+      "category": "public.app-category.games",
+      "target": [
+        "zip",
+        "dmg"
+      ]
     },
     "dmg": {
       "contents": [
@@ -57,7 +64,7 @@
     },
     "win": {
       "target": [
-        "msi"
+        "nsis"
       ]
     },
     "linux": {
@@ -66,10 +73,19 @@
       ],
       "category": "Game"
     },
+    "nsis": {
+      "perMachine": true
+    },
     "directories": {
       "buildResources": "resources",
       "output": "build"
-    }
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://localhost:8000/launcher/update"
+      }
+    ]
   },
   "author": {
     "name": "BriceFab",

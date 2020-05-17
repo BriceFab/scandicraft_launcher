@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const { autoUpdater } = require("electron-updater")
+const { AppUpdater } = require('./auto-update/updater')
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -7,17 +7,6 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
 }
 
 let mainWindow; //pass garbage collector
-
-console.log("test")
-
-export default class AppUpdater {
-    constructor() {
-        const log = require("electron-log")
-        log.transports.file.level = 'info';
-        autoUpdater.logger = log;
-        autoUpdater.checkForUpdatesAndNotify();
-    }
-}
 
 function createWindow() {
     // Cree la fenetre du navigateur.
@@ -40,7 +29,11 @@ function createWindow() {
         mainWindow.webContents.openDevTools()
     }
 
-    new AppUpdater();
+    //check update
+    if (!dev) {
+        const updater = new AppUpdater();
+        updater.checkUpdate();
+    }
 }
 
 app.allowRendererProcessReuse = true;

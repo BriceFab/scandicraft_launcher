@@ -4,7 +4,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // Config directories
-const SRC_DIR = path.resolve(__dirname, 'src');
+const SRC_DIR = path.resolve(__dirname, 'src-react');
 const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {

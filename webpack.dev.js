@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 // Config directories
-const SRC_DIR = path.resolve(__dirname, 'src');
+const SRC_DIR = path.resolve(__dirname, 'src-react');
 const OUTPUT_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {

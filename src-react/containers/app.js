@@ -5,7 +5,7 @@ function App() {
     return (
         <div>
             <Button variant="contained" color="primary">
-                Bouton
+                Launch
             </Button>
         </div>
     );

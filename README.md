@@ -6,5 +6,12 @@
 - Webpack: empacter les fichier frontend
 - Babel: transcompilateur JavaScript
 
+# Build et update
+Auto-update available:
+- macOS: DMG
+- Linux: AppImage
+- Windows: NSIS
+=> Docs: https://www.electron.build/auto-update
+
 # UI
 - Material-ui
