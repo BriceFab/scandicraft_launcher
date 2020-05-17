@@ -1,13 +1,27 @@
 const { app, BrowserWindow } = require('electron')
+const { autoUpdater } = require("electron-updater")
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
     dev = true;
 }
 
+let mainWindow; //pass garbage collector
+
+console.log("test")
+
+export default class AppUpdater {
+    constructor() {
+        const log = require("electron-log")
+        log.transports.file.level = 'info';
+        autoUpdater.logger = log;
+        autoUpdater.checkForUpdatesAndNotify();
+    }
+}
+
 function createWindow() {
     // Cree la fenetre du navigateur.
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         hasShadow: false,
@@ -17,12 +31,16 @@ function createWindow() {
     })
 
     // et charger le fichier index.html de l'application.
-    win.loadFile('dist/index.html')
+    mainWindow.loadFile('dist/index.html')
+
+    //TODO Menu
 
     // Ouvre les DevTools.
     if (dev) {
-        win.webContents.openDevTools()
+        mainWindow.webContents.openDevTools()
     }
+
+    new AppUpdater();
 }
 
 app.allowRendererProcessReuse = true;
@@ -44,7 +62,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // Sur macOS, il est commun de re-créer une fenêtre de l'application quand
     // l'icône du dock est cliquée et qu'il n'y a pas d'autres fenêtres d'ouvertes.
-    if (win === null) {
+    if (mainWindow === null) {
         createWindow()
     }
 })

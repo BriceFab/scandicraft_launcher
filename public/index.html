@@ -18,6 +18,12 @@
   <script>document.write(process.versions.chrome)</script>,
   and Electron
   <script>document.write(process.versions.electron)</script>.
+
+  <script>
+    // ESM Process
+    require = require('esm')(module)
+  </script>
+
 </body>
 
 </html>

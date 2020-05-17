@@ -2,7 +2,7 @@
   "name": "scandicraft_launcher",
   "version": "1.0.0",
   "description": "ScandiCraft Launcher",
-  "main": "public/main.js",
+  "main": "public/index.js",
   "scripts": {
     "pack-dev": "npx webpack --config webpack.dev.js",
     "pack-prod": "npx webpack --config webpack.prod.js",
@@ -23,6 +23,9 @@
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
+    "electron-log": "^4.1.2",
+    "electron-updater": "^4.3.1",
+    "esm": "^3.2.25",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
