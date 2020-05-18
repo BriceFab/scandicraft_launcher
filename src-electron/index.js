@@ -11,8 +11,8 @@ let mainWindow = null; //pass garbage collector
 function createWindow() {
     // Cree la fenetre du navigateur.
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 950,
+        height: 650,
         hasShadow: false,
         webPreferences: {
             nodeIntegration: true

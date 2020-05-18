@@ -17,8 +17,8 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+            <Link color="inherit" href="https://scandicraft-mc.fr/" target="_blank">
+                ScandiCraft
       </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -66,7 +66,7 @@ export default function LoginPage() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Pseudonyme ou email"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -77,14 +77,14 @@ export default function LoginPage() {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Mot de passe"
                         type="password"
                         id="password"
                         autoComplete="current-password"
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                        label="Rester connecté"
                     />
                     <Button
                         type="submit"
@@ -93,17 +93,17 @@ export default function LoginPage() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        Connexion
           </Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
-                                Forgot password?
+                                Mot de passe oublié ?
               </Link>
                         </Grid>
                         <Grid item>
                             <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                                {"Créer un compte"}
                             </Link>
                         </Grid>
                     </Grid>

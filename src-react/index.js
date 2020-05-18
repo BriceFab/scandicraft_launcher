@@ -6,7 +6,7 @@ import routes from './routes/routes.json';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router basename={routes.LOGIN}>
+        <Router basename={routes.LAUNCHER}>
             <App />
         </Router>
     </React.StrictMode>,
