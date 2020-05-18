@@ -35,11 +35,7 @@
     "productName": "ScandiCraft",
     "appId": "fr.scandicraft-mc",
     "files": [
-      "dist/**/*",
-      "dist/index.html",
-      "public/index.html",
-      "node_modules",
-      "package.json"
+      "dist/**/*"
     ],
     "mac": {
       "category": "public.app-category.games",

@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const { AppUpdater } = require('./auto-update/updater')
+import AppUpdater from './auto-update/updater'
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
