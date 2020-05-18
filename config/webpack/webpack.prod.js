@@ -1,13 +1,16 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const fs = require('fs');
 
 // Config directories
 const TOP_DIR = '../../';
 const SRC_REACT = path.resolve(__dirname, TOP_DIR, 'src-react');
 const SRC_ELECTRON = path.resolve(__dirname, TOP_DIR, 'src-electron');
 const OUTPUT_DIR = path.resolve(__dirname, TOP_DIR, 'dist');
+
+//clean output dir
+fs.rmdirSync('dist', { recursive: true });
 
 const mainConfig = {
     mode: 'production',
@@ -34,7 +37,6 @@ const mainConfig = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(),
     ]
 };
 

@@ -10,13 +10,12 @@
     "build-win32": "npm run pack-prod && electron-builder build --win --x32",
     "build-mac": "npm run pack-prod && electron-builder build --mac",
     "build-linux": "npm run pack-prod && electron-builder build --linux",
-    "start": "electron ./dist/electron.bundle.js"
+    "start": "electron ."
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0.0",
     "electron": "^8.3.0",
     "electron-builder": "^22.6.0",
     "html-webpack-plugin": "^4.3.0",
@@ -37,6 +36,9 @@
     "appId": "fr.scandicraft-mc",
     "files": [
       "dist/**/*",
+      "dist/index.html",
+      "public/index.html",
+      "node_modules",
       "package.json"
     ],
     "mac": {

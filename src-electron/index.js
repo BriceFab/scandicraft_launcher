@@ -20,7 +20,7 @@ function createWindow() {
     })
 
     // et charger le fichier index.html de l'application.
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile('dist/index.html')
 
     //TODO Menu
 
