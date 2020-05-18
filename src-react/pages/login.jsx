@@ -12,14 +12,17 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { openURL, webURLFromURI } from '../services/url';
+import config from '../../config/config.json';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://scandicraft-mc.fr/" target="_blank">
+            <Link color="inherit" href="#" onClick={() => openURL(config.WEB_BASE_URL)}>
                 ScandiCraft
-      </Link>{' '}
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -94,15 +97,15 @@ export default function LoginPage() {
                         className={classes.submit}
                     >
                         Connexion
-          </Button>
+                    </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link onClick={() => openURL(webURLFromURI('connexion'))} href="#" variant="body2">
                                 Mot de passe oublié ?
-              </Link>
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link onClick={() => openURL(webURLFromURI('inscription'))} href="#" variant="body2">
                                 {"Créer un compte"}
                             </Link>
                         </Grid>
