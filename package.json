@@ -1,17 +1,16 @@
 {
   "name": "scandicraft_launcher",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "description": "ScandiCraft Launcher",
-  "main": "src-electron/index.js",
+  "main": "./dist/electron.bundle.js",
   "scripts": {
-    "pack-dev": "npx webpack --config webpack.dev.js",
-    "pack-prod": "npx webpack --config webpack.prod.js",
+    "pack-dev": "npx webpack --config ./config/webpack/webpack.dev.js",
+    "pack-prod": "npx webpack --config ./config/webpack/webpack.prod.js",
     "build-win64": "npm run pack-prod && electron-builder build --win --x64",
     "build-win32": "npm run pack-prod && electron-builder build --win --x32",
     "build-mac": "npm run pack-prod && electron-builder build --mac",
     "build-linux": "npm run pack-prod && electron-builder build --linux",
-    "start": "electron .",
-    "start-e": "electron ./dist/electron.bundle.js"
+    "start": "electron ./dist/electron.bundle.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -37,9 +36,7 @@
     "productName": "ScandiCraft",
     "appId": "fr.scandicraft-mc",
     "files": [
-      "dist/",
-      "node_modules/",
-      "src-electron/",
+      "dist/**/*",
       "package.json"
     ],
     "mac": {

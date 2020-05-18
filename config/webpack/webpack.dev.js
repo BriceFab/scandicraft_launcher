@@ -3,15 +3,46 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 // Config directories
-const SRC_DIR = path.resolve(__dirname, 'src-react');
-const OUTPUT_DIR = path.resolve(__dirname, 'dist');
+const TOP_DIR = '../../';
+const SRC_REACT = path.resolve(__dirname, TOP_DIR, 'src-react');
+const SRC_ELECTRON = path.resolve(__dirname, TOP_DIR, 'src-electron');
+const OUTPUT_DIR = path.resolve(__dirname, TOP_DIR, 'dist');
 
-module.exports = {
+const mainConfig = {
     mode: 'development',
     target: 'electron-main',
     entry: {
-        react: SRC_DIR + '/index.js',
-        electron: path.resolve(__dirname, 'src-electron') + '/index.js'
+        electron: SRC_ELECTRON + '/index.js',
+    },
+    output: {
+        path: OUTPUT_DIR,
+        publicPath: './',
+        filename: '[name].bundle.js'
+    },
+    devtool: 'inline-source-map',
+    watch: true,
+    module: {
+        rules: [
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
+        ]
+    },
+    resolve: {
+        extensions: ['*', '.js']
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+    ]
+};
+
+const rendererConfig = {
+    mode: 'development',
+    target: 'electron-renderer',
+    entry: {
+        react: SRC_REACT + '/index.js',
     },
     output: {
         path: OUTPUT_DIR,
@@ -40,15 +71,12 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: 'public/index.html',
             inject: 'body',
             chunks: ['react']
         }),
-    ],
-    devServer: {
-        contentBase: './dist',
-        hot: true
-    }
+    ]
 };
+
+module.exports = [mainConfig, rendererConfig];
