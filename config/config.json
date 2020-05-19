@@ -1,4 +1,15 @@
 {
     "WEB_BASE_URL": "https://scandicraft-mc.fr/",
-    "API_ENTRY_POINT": "https://scandicraft-mc.fr/"
+    "API": {
+        "ENTRY_POINT": "https://scandicraft-mc.fr/",
+        "SECRET_ENCRYPTION": "encrypt"
+    },
+    "STORAGE": {
+        "KEY_TOKEN": "user_token",
+        "REMEMBER_ME": {
+            "KEY": "remember_me",
+            "KEY_USERNAME": "user_name",
+            "KEY_PASSWORD": "user_password"
+        }
+    }
 }

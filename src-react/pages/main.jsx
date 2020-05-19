@@ -50,5 +50,4 @@ function mapDispatchToProps(dispatch) {
 
 // export default MainPage;
 // export default RequireAuth()(connect(mapStateToProps, mapDispatchToProps)(MainPage));
-// export default connect(mapStateToProps, mapDispatchToProps)(RequireAuth()(withStyles(styles)(MainPage)));
-export default connect(mapStateToProps, mapDispatchToProps)((withStyles(styles)(MainPage)));
+export default connect(mapStateToProps, mapDispatchToProps)(RequireAuth()(withStyles(styles)(MainPage)));

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import routes from '../routes/routes.json';
 
 export default () => Component => {
@@ -11,8 +11,7 @@ export default () => Component => {
             if (loggedIn) {
                 return <Component {...passThroughProps} />;
             } else {
-                // return <Redirect to={routes.LOGIN} />
-                return <Link to='/login'>Login</Link>
+                return <Redirect to={routes.LOGIN} />
             }
         }
     }
