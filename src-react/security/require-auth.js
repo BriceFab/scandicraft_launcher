@@ -17,7 +17,7 @@ export default () => Component => {
     }
 
     const mapStateToProps = (state) => ({
-        loggedIn: false
+        loggedIn: state.user.loggedIn
     });
 
     return connect(mapStateToProps)(RequireAuth);

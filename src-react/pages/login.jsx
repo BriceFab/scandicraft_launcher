@@ -34,7 +34,7 @@ function Copyright() {
 class LoginPage extends Component {
     render() {
         return (
-            <LoginForm />
+            <LoginForm history={this.props.history} />
         );
     }
 }

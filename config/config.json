@@ -1,7 +1,7 @@
 {
     "WEB_BASE_URL": "https://scandicraft-mc.fr/",
     "API": {
-        "ENTRY_POINT": "https://scandicraft-mc.fr/",
+        "ENTRY_POINT": "https://scandicraft-mc.fr/api",
         "SECRET_ENCRYPTION": "encrypt"
     },
     "STORAGE": {

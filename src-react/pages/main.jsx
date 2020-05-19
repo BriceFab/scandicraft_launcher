@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RequireAuth from '../security/require-auth';
-import { withStyles } from "@material-ui/core";
+import { withStyles, Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import routes from '../routes/routes.json';
 
@@ -19,12 +19,17 @@ class MainPage extends Component {
         console.log('main page constructor call')
     }
 
+    onCallLaunch() {
+        alert('launch')
+    }
+
     render() {
         return (
             <div>
                 Main page
-
-                <Link to={routes.LOGIN}>Login</Link>
+                <Button onClick={this.onCallLaunch.bind(this)} color={'primary'} variant={'contained'}>
+                    Launch
+                </Button>
             </div>
         )
     }

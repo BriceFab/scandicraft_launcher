@@ -1,22 +1,24 @@
 import axios from 'axios';
-import config from '../../config/config.json';
+import CONFIG from '../../config/config.json';
 import jwt from 'jsonwebtoken';
 import { token_expired } from '../actions/user';
 
 let instance = axios.create({
-    baseURL: config.API.ENTRY_POINT,
+    baseURL: CONFIG.API.ENTRY_POINT,
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem(config.STORAGE.KEY_TOKEN) || 'none'}`,
-    }
+        'Authorization': `Bearer ${localStorage.getItem(CONFIG.STORAGE.KEY_TOKEN) || 'none'}`,
+    },
+    adapter: require('axios/lib/adapters/xhr')
+    // adapter: require('axios/lib/adapters/http'),
 });
 
 instance.interceptors.request.use((config) => {
     //verify token has expired
-    let token = config.headers.Authorization.replace('Bearer ', '') || localStorage.getItem(config.STORAGE.KEY_TOKEN);
+    let token = config.headers.Authorization.replace('Bearer ', '') || localStorage.getItem(CONFIG.STORAGE.KEY_TOKEN);
     if (token === 'none') {
-        token = localStorage.getItem(config.STORAGE.KEY_TOKEN);
+        token = localStorage.getItem(CONFIG.STORAGE.KEY_TOKEN);
     }
 
     if (token !== null) {
@@ -40,7 +42,7 @@ instance.interceptors.request.use((config) => {
         try {
             config.data = {
                 encrypted: true,
-                data: jwt.sign(config.data, config.API.SECRET_ENCRYPTION)
+                data: jwt.sign(config.data, CONFIG.API.SECRET_ENCRYPTION)
             }
         } catch (err) {
             console.log('error when encrypt request', err);
@@ -56,7 +58,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use((response) => {
     if (response.data.encrypted) {
         try {
-            response.data = jwt.verify(response.data.data, config.API.SECRET_ENCRYPTION);
+            response.data = jwt.verify(response.data.data, CONFIG.API.SECRET_ENCRYPTION);
         } catch (err) {
             console.log('error when decrypt response', err);
         }

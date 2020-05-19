@@ -12,14 +12,16 @@ import { login } from '../../actions/user';
 import userValidator from '../../validators/user';
 import styles from '../../design/styles/loginStyle';
 import config from '../../../config/config.json';
+import routes from '../../routes/routes.json';
 
 class LoginForm extends Component {
     onSubmit({ ...props }) {
         this.props.login(props).then((res) => {
-            if (res && res.success) {
-                console.log('login sucess, redirect')
-                alert('must redirect')
-                // this.props.history.push('/');
+            console.log('res',res)
+            if (res && res.status === 200) {
+                console.log('login sucess, redirect ', this.props.history)
+                this.props.history.push(routes.LAUNCHER);
+                console.log('pushed')
             }
         });
     }
@@ -64,7 +66,7 @@ class LoginForm extends Component {
                 <Button
                     className={classes.signInButton}
                     color={'primary'}
-                    disabled={JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting}
+                    disabled={localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting}
                     size={'large'}
                     variant="contained"
                     type={'submit'}>
@@ -83,7 +85,7 @@ const validate = validateForm({
 const form = {
     form: 'LoginForm',
     validate,
-    initialValues: JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? {
+    initialValues: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? {
         remember: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY),
         username: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME),
         password: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD),

@@ -1,7 +1,6 @@
 import { ACTIONS } from "./actions_types";
 import { axiosPost } from "../services/axios";
-
-const URI = 'user';
+import config from '../../config/config.json';
 
 export const setToken = (token) => (dispatch) => {
     dispatch({
@@ -11,7 +10,7 @@ export const setToken = (token) => (dispatch) => {
 }
 
 export const register = (user) => (dispatch) => {
-    return axiosPost(`${URI}/register`, user).then((res) => {
+    return axiosPost(`register`, user).then((res) => {
         dispatch({
             type: ACTIONS.API.SUCCESS,
             payload: {
@@ -33,14 +32,14 @@ export const register = (user) => (dispatch) => {
 };
 
 export const login = (user) => dispatch => {
-    return axiosPost(`${URI}/login`, user).then((res) => {
+    return axiosPost(`login_check`, user).then((res) => {
         dispatch({
             type: ACTIONS.USER.SET_TOKEN,
-            payload: res.data.data.token
+            payload: res.data.token
         });
         dispatch({
             type: ACTIONS.USER.LOGIN,
-            payload: res.data.data
+            payload: res.data
         });
         dispatch({
             type: ACTIONS.API.SUCCESS,
@@ -50,32 +49,25 @@ export const login = (user) => dispatch => {
             }
         });
 
-        localStorage.setItem(CONFIG.STORAGE.REMEMBER, user.remember.toString())
-        if (JSON.parse(user.remember) === true) {
-            localStorage.setItem(CONFIG.STORAGE.PASSWORD, user.password.toString())
+        console.log('result user', user)
+
+        if (user.remember && JSON.parse(user.remember) === true) {
+            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY, true)
+            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
+            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
         } else {
-            localStorage.removeItem(CONFIG.STORAGE.PASSWORD)
+            localStorage.removeItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME)
+            localStorage.removeItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD)
+            localStorage.setItem(config.STORAGE.REMEMBER_ME.REMEMBER_ME.KEY, false)
         }
 
-        return res.data;
+        console.log('return ', res.data)
+
+        return res;
     }, (error) => {
         let api_error = error;
-        if (error.response) {
-            const headers = error.response.headers;
 
-            const remaining = headers['x-ratelimit-remaining'];
-            if (remaining > 0) {
-                const limit = headers['x-ratelimit-limit'];
-                toast.warn(`Essai de connexion n°${limit - remaining}/${limit}`);
-            } else {
-                const retry_date = moment(headers['x-ratelimit-reset'] * 1000);
-                const retry_in = retry_date.diff(Date.now(), 'minutes');
-
-                api_error = {
-                    message: `Vous avez dépassé la limite d'essai de connexion. Réssayer dans ${retry_in} minutes`,
-                }
-            }
-        }
+        alert('Mauvais login')
 
         dispatch({
             type: ACTIONS.API.ERROR,
