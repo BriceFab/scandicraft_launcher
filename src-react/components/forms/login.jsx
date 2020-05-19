@@ -35,7 +35,7 @@ class LoginForm extends Component {
                     <Field
                         name="username"
                         component={TextField}
-                        label="Pseudonyme ou email"
+                        label="Pseudonyme"
                         icon={<Person className={classes.inputIconsColor} />}
                         formControlProps={{
                             fullWidth: true

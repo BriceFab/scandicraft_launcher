@@ -5,6 +5,8 @@ import RequireAuth from '../security/require-auth';
 import { withStyles, Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import routes from '../routes/routes.json';
+import IPC_CONFIG from '../../config/ipc.json';
+import { ipcRenderer } from 'electron';
 
 const styles = theme => ({
     root: {
@@ -21,6 +23,12 @@ class MainPage extends Component {
 
     onCallLaunch() {
         alert('launch')
+
+        console.log('state', this.props.user)
+
+        ipcRenderer.send(IPC_CONFIG.FETCH_LAUNCH, {
+            user: this.props.user
+        });
     }
 
     render() {
@@ -36,7 +44,9 @@ class MainPage extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log('test ', state)
     return {
+        user: state.user
         // counter: state.counter
     };
 }

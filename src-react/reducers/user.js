@@ -13,6 +13,7 @@ export default function reducer(state = initialState, action) {
         case ACTIONS.USER.LOGIN: {
             state.loggedIn = true;
             console.log('reducer payload', action.payload)
+            state.current = action.param;
             // localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
             // window.location.reload();
             return { ...state };

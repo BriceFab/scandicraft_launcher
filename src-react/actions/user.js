@@ -39,7 +39,8 @@ export const login = (user) => dispatch => {
         });
         dispatch({
             type: ACTIONS.USER.LOGIN,
-            payload: res.data
+            payload: res.data,
+            param: user
         });
         dispatch({
             type: ACTIONS.API.SUCCESS,
