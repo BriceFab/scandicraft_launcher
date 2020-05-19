@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import AppUpdater from './auto-update/updater'
 import IPC_CONFIG from '../config/ipc.json';
 import { launch } from './services/launch';
@@ -50,7 +51,15 @@ ipcMain.on(IPC_CONFIG.FETCH_LAUNCH, (e, args) => {
 // Cette méthode sera appelée quant Electron aura fini
 // de s'initialiser et prêt à créer des fenêtres de navigation.
 // Certaines APIs peuvent être utilisées uniquement quand cet événement est émit.
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+    createWindow();
+
+    if (dev) {
+        installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+            .then((name) => console.log('Added Extensions'))
+            .catch((err) => console.log('An error occurred: ', err));
+    }
+});
 
 // Quitter si toutes les fenêtres ont été fermées.
 app.on('window-all-closed', () => {

@@ -8,11 +8,13 @@ import config from '../config/config.json';
 export const history = createHashHistory()
 const api = config.API_ENTRY_POINT;
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export default function configureStore(preloadedState) {
     const store = createStore(
         createRootReducer(history),
         preloadedState,
-        compose(
+        composeEnhancers(
             applyMiddleware(
                 routerMiddleware(history),
                 thunk.withExtraArgument({ api })
