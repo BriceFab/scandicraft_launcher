@@ -1,3 +1,4 @@
 {
-    "WEB_BASE_URL": "https://scandicraft-mc.fr/"
+    "WEB_BASE_URL": "https://scandicraft-mc.fr/",
+    "API_ENTRY_POINT": "https://scandicraft-mc.fr/"
 }

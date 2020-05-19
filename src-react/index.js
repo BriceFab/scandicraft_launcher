@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 import App from './containers/app';
-import routes from './routes/routes.json';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import configureStore, { history } from './store'
+
+const store = configureStore();
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router basename={routes.LAUNCHER}>
-            <App />
-        </Router>
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <App />
+            </ConnectedRouter>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

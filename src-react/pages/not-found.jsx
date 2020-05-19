@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import routes from '../routes/routes.json';
+import { Link } from 'react-router-dom';
 
 export default class NotFound extends Component {
 
@@ -14,7 +16,7 @@ export default class NotFound extends Component {
     render() {
         return (
             <div>
-                Route not found
+                Page indisponible {' '} <Link to={routes.LAUNCHER}>Accueil</Link>
             </div>
         )
     }

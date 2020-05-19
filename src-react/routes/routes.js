@@ -8,9 +8,9 @@ import MainPage from '../pages/main';
 export default function Routes() {
     return (
         <Switch>
-            <Route path={routes.LAUNCHER} component={MainPage} />
+            <Route exact path={routes.LAUNCHER} component={MainPage} />
             <Route path={routes.LOGIN} component={LoginPage} />
-            <Route component={NotFound}/>
+            <Route component={NotFound} />
         </Switch>
     );
 }
