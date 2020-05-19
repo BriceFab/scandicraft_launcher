@@ -38,16 +38,16 @@ instance.interceptors.request.use((config) => {
     }
 
     //encrypt request
-    if (process.env.NODE_ENV !== 'development') {
-        try {
-            config.data = {
-                encrypted: true,
-                data: jwt.sign(config.data, CONFIG.API.SECRET_ENCRYPTION)
-            }
-        } catch (err) {
-            console.log('error when encrypt request', err);
-        }
-    }
+    // if (process.env.NODE_ENV !== 'development') {
+    //     try {
+    //         config.data = {
+    //             encrypted: true,
+    //             data: jwt.sign(config.data, CONFIG.API.SECRET_ENCRYPTION)
+    //         }
+    //     } catch (err) {
+    //         console.log('error when encrypt request', err);
+    //     }
+    // }
 
     return config;
 }, (error) => {
