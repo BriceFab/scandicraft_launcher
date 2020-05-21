@@ -10,7 +10,7 @@ let instance = axios.create({
         'Accept': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem(CONFIG.STORAGE.KEY_TOKEN) || 'none'}`,
     },
-    adapter: require('axios/lib/adapters/xhr')
+    // adapter: require('axios/lib/adapters/xhr')
     // adapter: require('axios/lib/adapters/http'),
 });
 

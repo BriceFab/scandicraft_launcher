@@ -1,8 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import AppUpdater from './auto-update/updater'
-import IPC_CONFIG from '../config/ipc.json';
-import { launch } from './services/launch';
+import { downloadImage } from '../src-react/services/test';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -14,18 +13,26 @@ let mainWindow = null; //pass garbage collector
 function createWindow() {
     // Cree la fenetre du navigateur.
     mainWindow = new BrowserWindow({
+        minWidth: 750,
+        minHeight: 450,
         width: 950,
         height: 650,
         hasShadow: false,
+        // frame: false,
         webPreferences: {
-            nodeIntegration: true
-        }
+            nodeIntegration: true,
+            devTools: dev
+        },
+        // backgroundColor: '#171614'
     })
 
     // et charger le fichier index.html de l'application.
     mainWindow.loadFile('dist/index.html')
 
-    //TODO Menu
+    //Menu
+    if (!dev) {
+        mainWindow.removeMenu()
+    }
 
     // Ouvre les DevTools.
     if (dev) {
@@ -39,14 +46,11 @@ function createWindow() {
     }
 }
 
+// Disable hardware acceleration.
+// https://electronjs.org/docs/tutorial/offscreen-rendering
+app.disableHardwareAcceleration()
+
 app.allowRendererProcessReuse = true;
-
-//IPC Bus
-ipcMain.on(IPC_CONFIG.FETCH_LAUNCH, (e, args) => {
-    console.log('electron fetch launch ', args.user.current)
-
-    launch(args.user.current);
-});
 
 // Cette méthode sera appelée quant Electron aura fini
 // de s'initialiser et prêt à créer des fenêtres de navigation.
@@ -77,3 +81,8 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
+ipcMain.on('test', (event, ...args) => {
+    console.log('main call download')
+    downloadImage()
+});

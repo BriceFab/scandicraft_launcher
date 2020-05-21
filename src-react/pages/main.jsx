@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RequireAuth from '../security/require-auth';
 import { withStyles, Button } from "@material-ui/core";
-import { Link } from 'react-router-dom';
-import routes from '../routes/routes.json';
-import IPC_CONFIG from '../../config/ipc.json';
-import { ipcRenderer } from 'electron';
+import { launch } from '../services/launch';
+import { downloadImage } from '../services/test';
+import { ipcMain, ipcRenderer } from 'electron';
 
 const styles = theme => ({
     root: {
@@ -15,20 +14,14 @@ const styles = theme => ({
 });
 
 class MainPage extends Component {
-    constructor(props) {
-        super(props)
-
-        console.log('main page constructor call')
-    }
-
     onCallLaunch() {
-        alert('launch')
-
         console.log('state', this.props.user)
 
-        ipcRenderer.send(IPC_CONFIG.FETCH_LAUNCH, {
-            user: this.props.user
-        });
+        // launch(this.props.user)
+    }
+
+    componentDidMount() {
+        ipcRenderer.send('test', {})
     }
 
     render() {

@@ -45,6 +45,9 @@
     "redux-form-validators": "^3.3.2",
     "redux-thunk": "^2.3.0"
   },
+  "engines": {
+    "node": "12.x.x"
+  },
   "build": {
     "productName": "ScandiCraft",
     "appId": "fr.scandicraft-mc",
@@ -98,8 +101,8 @@
     ]
   },
   "author": {
-    "name": "BriceFab",
-    "email": "bricefab123@gmail.com"
+    "name": "ScandiCraft",
+    "email": "scandicraft.minecraft@gmail.com"
   },
   "private": true,
   "repository": {
