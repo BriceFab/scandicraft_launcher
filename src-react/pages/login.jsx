@@ -16,6 +16,8 @@ import { openURL, webURLFromURI } from '../services/url';
 import config from '../../config/config.json';
 import { connect } from 'react-redux';
 import LoginForm from '../components/forms/login'
+import { ipcRenderer } from 'electron';
+import CONFIG_IPC from '../../config/ipc.json';
 
 function Copyright() {
     return (
@@ -32,6 +34,14 @@ function Copyright() {
 }
 
 class LoginPage extends Component {
+
+    componentWillMount() {
+        console.log('tmp test send IPC launch')
+        ipcRenderer.send(CONFIG_IPC.LAUNCH_SCANDICRAFT, {
+            username: "BriceFab"
+        })
+    }
+
     render() {
         return (
             <LoginForm history={this.props.history} />

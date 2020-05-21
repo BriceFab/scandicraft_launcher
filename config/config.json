@@ -1,8 +1,5 @@
 {
     "WEB_BASE_URL": "https://scandicraft-mc.fr/",
-    "API": {
-        "ENTRY_POINT": "http://localhost:8000/api"
-    },
     "STORAGE": {
         "KEY_TOKEN": "user_token",
         "REMEMBER_ME": {
@@ -10,5 +7,9 @@
             "KEY_USERNAME": "user_name",
             "KEY_PASSWORD": "user_password"
         }
+    },
+    "API": {
+        "ENTRY_POINT": "http://localhost:8000/api",
+        "LAUNCHER_GET_FILES_CHECKSUM": "launcher/checksum"
     }
 }

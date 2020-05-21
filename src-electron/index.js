@@ -1,7 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow } = require('electron')
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
-import AppUpdater from './auto-update/updater'
-import { downloadImage } from '../src-react/services/test';
+import AppUpdater from './auto-update/updater';
+import ipcRegister from './communication/ipc';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -58,11 +58,15 @@ app.allowRendererProcessReuse = true;
 app.whenReady().then(() => {
     createWindow();
 
+    //Install dev extensions
     if (dev) {
         installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
             .then((name) => console.log('Added Extensions'))
             .catch((err) => console.log('An error occurred: ', err));
     }
+
+    //Register IPC
+    ipcRegister();
 });
 
 // Quitter si toutes les fenêtres ont été fermées.
@@ -81,8 +85,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-ipcMain.on('test', (event, ...args) => {
-    console.log('main call download')
-    downloadImage()
-});
