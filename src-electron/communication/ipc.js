@@ -21,7 +21,7 @@ const ipcRegister = () => {
 
             //install files
             console.log('start install')
-            await installFiles(files_to_download);
+            await installFiles();
             console.log('finish install')
         } catch (error) {
             console.log('launch error', error.response.data)

@@ -3,7 +3,15 @@ import { axiosPostWithConfig } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
 
+const launcher_path = LAUNCHER_CONFIG.LAUNCHER_HOME + LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE;
+
 export default async function downloadFiles(files) {
+    //purg temp download file
+    if (fs.existsSync(launcher_path)) {
+        fs.unlinkSync(launcher_path);
+    }
+
+    //download files
     const downloaded_bytes = await downloadServerFiles(files);
 
     console.log(`Successful downloaded ${downloaded_bytes} bytes`)
@@ -28,7 +36,7 @@ function downloadServerFiles(files) {
             })
 
             //Enregistre le flux
-            res.data.pipe(fs.createWriteStream(LAUNCHER_CONFIG.LAUNCHER_HOME + 'scandicraft_download.zip'))
+            res.data.pipe(fs.createWriteStream(launcher_path))
 
             res.data.on('end', () => {
                 resolve(downloadedBytes)
@@ -37,7 +45,7 @@ function downloadServerFiles(files) {
             res.data.on('error', (err) => {
                 reject(err)
             })
-        }, (err) => {
+        }).catch((err) => {
             reject(err)
         })
     })
