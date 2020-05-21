@@ -7,7 +7,7 @@ import { LAUNCHER_CONFIG } from '../config/launcher';
 export default async function checkFiles() {
     let change_files = [];
 
-    const files_checksum = await getServerFiles();
+    const files_checksum = await getServerFiles()
 
     files_checksum.forEach((file) => {
         const file_path = LAUNCHER_CONFIG.LAUNCHER_HOME + file.name;
@@ -24,9 +24,15 @@ export default async function checkFiles() {
     return change_files;
 }
 
-async function getServerFiles() {
-    const res = await axiosGet(CONFIG.API.LAUNCHER_GET_FILES_CHECKSUM);
-    return res.data;
+function getServerFiles() {
+    return new Promise((resolve, reject) => {
+        axiosGet(CONFIG.API.LAUNCHER_GET_FILES_CHECKSUM).then(
+            (res) => {
+                resolve(res.data)
+            }).catch((err) => {
+                reject(err)
+            })
+    })
 }
 
 function getHash(file_path) {
