@@ -26,7 +26,7 @@ function unzip() {
         });
 
         unzipper.on('extract', function (log) {
-            console.log('Finished extracting ', log);
+            // console.log('Finished extracting ');
             resolve(log)
         });
 

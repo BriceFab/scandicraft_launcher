@@ -3,6 +3,9 @@ import checkFiles from '../services/check_files';
 import { ipcMain } from 'electron';
 import downloadFiles from '../services/download_files';
 import installFiles from '../services/install_files';
+import { launchScandiCraf } from '../services/launch';
+
+let startTaskTime = null;
 
 const ipcRegister = () => {
 
@@ -10,23 +13,46 @@ const ipcRegister = () => {
     ipcMain.on(CONFIG_IPC.LAUNCH_SCANDICRAFT, async (event, ...args) => {
         try {
             //scan files
-            console.log('start scan')
+            startTask('scan')
             let files_to_download = await checkFiles();
-            console.log('finish scan')
+            stopTask('scan')
 
-            //download files
-            console.log('start download')
-            await downloadFiles(files_to_download);
-            console.log('finish download')
+            if (files_to_download.length > 0) {
+                //download files
+                startTask('download')
+                await downloadFiles(files_to_download);
+                stopTask('download')
 
-            //install files
-            console.log('start install')
-            await installFiles();
-            console.log('finish install')
+                //install files
+                startTask('install')
+                await installFiles();
+                stopTask('install')
+            } else {
+                console.log('don\'t need to download anything')
+            }
+
+            //launch
+            startTask('launch')
+            launchScandiCraf();
+            stopTask('launch')
         } catch (error) {
             console.log('launch error', error.response.data)
         }
     })
+}
+
+function startTask(name) {
+    startTaskTime = getTime()
+    console.log(`[ScandiCraft] Start task ${name}`)
+}
+
+function stopTask(name) {
+    var diff_time = getTime() - startTaskTime;
+    console.log(`[ScandiCraft] Stop task ${name} in ${diff_time} ms`)
+}
+
+function getTime() {
+    return new Date().getTime();
 }
 
 export default ipcRegister;
