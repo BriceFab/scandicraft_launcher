@@ -10,6 +10,7 @@
     },
     "API": {
         "ENTRY_POINT": "http://localhost:8000/api",
-        "LAUNCHER_GET_FILES_CHECKSUM": "launcher/checksum"
+        "LAUNCHER_GET_FILES_CHECKSUM": "launcher/checksum",
+        "LAUNCHER_GET_FILES": "launcher/download"
     }
 }

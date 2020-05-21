@@ -77,6 +77,10 @@ export const axiosPost = (url, data) => {
     return instance.post(url, data);
 };
 
+export const axiosPostWithConfig = (url, data, config) => {
+    return instance.post(url, data, config);
+};
+
 export const axiosPut = (url, data) => {
     return instance.put(url, data);
 };
