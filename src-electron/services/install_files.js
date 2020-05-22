@@ -4,7 +4,7 @@ const DecompressZip = require('decompress-zip');
 import { LAUNCHER_CONFIG } from '../config/launcher';
 import { updateTaskProgress } from '../communication/ipc';
 
-const launcher_path = path.resolve(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
+const launcher_path = path.join(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 
 export default async function installFiles() {
 

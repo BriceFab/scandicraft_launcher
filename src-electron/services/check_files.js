@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const crypto = require('crypto');
 import { axiosGet } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
@@ -15,7 +16,7 @@ export default async function checkFiles() {
     const files_checksum = await getServerFiles()
 
     files_checksum.forEach((file) => {
-        const file_path = LAUNCHER_CONFIG.LAUNCHER_HOME + file.name;
+        const file_path = path.join(LAUNCHER_CONFIG.LAUNCHER_HOME, file.name);
         // console.log('file', file_path)
 
         if (!fs.existsSync(file_path) || fs.statSync(file_path).size !== file.size || getHash(file_path) !== file.hash) {
