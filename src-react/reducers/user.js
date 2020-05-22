@@ -1,6 +1,10 @@
 import { toast } from "react-toastify";
-import config from "../../config/config.json";
 import { ACTIONS } from "../actions/actions_types";
+import CONFIG from '../../config/config.json';
+const Store = require('electron-store');
+import jwt from 'jsonwebtoken';
+
+const store = new Store();
 
 const initialState = {
     loggedIn: false,
@@ -20,17 +24,22 @@ export default function reducer(state = initialState, action) {
         }
         case ACTIONS.USER.SET_TOKEN: {
             const token = action.payload;
-            localStorage.setItem(config.STORAGE.KEY_TOKEN, token);
+            store.set(CONFIG.STORAGE.KEY_TOKEN, token);
             state.token = token;
             state.loggedIn = true;
-            const username = localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME);
-            toast.success(`Bienvenue ${username ? username : ''} !`);
+            let decoded = jwt.decode(token);
+            const username = decoded.username;
+            state.current = {
+                username: username,
+                roles: decoded.roles
+            }
+            toast.success(`Salut ${username ? username : ''} !`);
             return { ...state };
         }
         case ACTIONS.USER.LOGOUT:
-            localStorage.removeItem(config.STORAGE.KEY_TOKEN);
-            if (JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === false) {
-                localStorage.removeItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME);
+            store.delete(CONFIG.STORAGE.KEY_TOKEN);
+            if (JSON.parse(store.get(CONFIG.STORAGE.REMEMBER_ME.KEY)) === false) {
+                store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME);
             }
             state.loggedIn = false;
             state.token = null;
@@ -40,22 +49,3 @@ export default function reducer(state = initialState, action) {
             return state;
     }
 }
-
-// import { GET_USER } from '../actions/user';
-
-// const initialState = {
-//     loggedIn: false,
-//     token: null,
-//     current: {}
-// }
-
-// export default function reducer(state = initialState, action) {
-//     switch (action.type) {
-//         case GET_USER:
-//             return Object.assign({}, state, {
-//                 current: action.payload
-//             });
-//         default:
-//             return state;
-//     }
-// }

@@ -3,7 +3,7 @@ import checkFiles from '../services/check_files';
 import { ipcMain } from 'electron';
 import downloadFiles from '../services/download_files';
 import installFiles from '../services/install_files';
-import { launchScandiCraf } from '../services/launch';
+import { launchScandiCraft } from '../services/launch';
 
 let startTaskTime = null;
 
@@ -33,7 +33,7 @@ const ipcRegister = () => {
 
             //launch
             startTask('launch')
-            launchScandiCraf();
+            launchScandiCraft();
             stopTask('launch')
         } catch (error) {
             console.log('launch error', error.response.data)

@@ -1,6 +1,11 @@
 import { ACTIONS } from "./actions_types";
-import { axiosPost } from "../services/axios";
-import config from '../../config/config.json';
+import routes from '../routes/routes.json';
+import { axiosPost } from "../../common/services/axios";
+const Store = require('electron-store');
+import CONFIG from '../../config/config.json';
+import { toast } from "react-toastify";
+
+const store = new Store();
 
 export const setToken = (token) => (dispatch) => {
     dispatch({
@@ -50,19 +55,15 @@ export const login = (user) => dispatch => {
             }
         });
 
-        console.log('result user', user)
-
         if (user.remember && JSON.parse(user.remember) === true) {
-            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY, true)
-            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
-            localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
+            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
+            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
+            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
         } else {
-            localStorage.removeItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME)
-            localStorage.removeItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD)
-            localStorage.setItem(config.STORAGE.REMEMBER_ME.REMEMBER_ME.KEY, false)
+            store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME)
+            store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD)
+            store.set(CONFIG.STORAGE.REMEMBER_ME.REMEMBER_ME.KEY, false)
         }
-
-        console.log('return ', res.data)
 
         return res;
     }, (error) => {
@@ -84,11 +85,11 @@ export const logout = () => dispatch => {
 };
 
 export const token_expired = () => {
-    localStorage.removeItem(CONFIG.STORAGE.TOKEN);
+    store.delete(CONFIG.STORAGE.TOKEN);
     toast.error('Votre session a expiré', {
         onClose: () => {
-            window.location.href = '/login';
-            window.location.reload(true);
+            window.location.href = routes.LOGIN;
+            // window.location.reload(true);
         }
     });
 };

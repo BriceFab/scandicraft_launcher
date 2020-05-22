@@ -7,6 +7,11 @@ import { LAUNCHER_CONFIG } from '../config/launcher';
 export default async function checkFiles() {
     let change_files = [];
 
+    //Create Launcher home if doesn't exist
+    if (!fs.existsSync(LAUNCHER_CONFIG.LAUNCHER_HOME)) {
+        fs.mkdirSync(LAUNCHER_CONFIG.LAUNCHER_HOME);
+    }
+
     const files_checksum = await getServerFiles()
 
     files_checksum.forEach((file) => {

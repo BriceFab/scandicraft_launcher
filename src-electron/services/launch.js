@@ -30,7 +30,7 @@ const args = [
     "legacy",
 ];
 
-export function launchScandiCraf(user = null) {
+export function launchScandiCraft(user = null) {
     const launch_scandicraft = spawn('java', args, {
         cwd: LAUNCHER_CONFIG.LAUNCHER_HOME
     });

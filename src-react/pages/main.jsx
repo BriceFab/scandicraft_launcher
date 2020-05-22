@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RequireAuth from '../security/require-auth';
 import { withStyles, Button } from "@material-ui/core";
-import { launch } from '../services/launch';
-import { downloadImage } from '../services/test';
-import { ipcMain, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
+import CONFIG_IPC from '../../config/ipc.json';
 
 const styles = theme => ({
     root: {
@@ -17,11 +16,9 @@ class MainPage extends Component {
     onCallLaunch() {
         console.log('state', this.props.user)
 
-        // launch(this.props.user)
-    }
-
-    componentDidMount() {
-        ipcRenderer.send('test', {})
+        ipcRenderer.send(CONFIG_IPC.LAUNCH_SCANDICRAFT, {
+            username: this.props.user
+        })
     }
 
     render() {
@@ -37,7 +34,6 @@ class MainPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('test ', state)
     return {
         user: state.user
         // counter: state.counter
@@ -56,6 +52,4 @@ function mapDispatchToProps(dispatch) {
     );
 }
 
-// export default MainPage;
-// export default RequireAuth()(connect(mapStateToProps, mapDispatchToProps)(MainPage));
 export default connect(mapStateToProps, mapDispatchToProps)(RequireAuth()(withStyles(styles)(MainPage)));

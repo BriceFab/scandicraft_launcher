@@ -1,8 +1,10 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import CONFIG from '../../config/config.json';
 const Store = require('electron-store');
-// import { token_expired } from '../actions/user';
+import { token_expired } from '../../src-react/actions/user';
+import hasExpired from './token';
+
+const store = new Store();
 
 let instance = axios.create({
     baseURL: CONFIG.API.ENTRY_POINT,
@@ -22,20 +24,8 @@ instance.interceptors.request.use((config) => {
         token = getToken();
     }
 
-    if (token !== null) {
-        try {
-            let decoded = jwt.decode(token);
-
-            if (Date.now() / 1000 > decoded.exp) {
-                console.log("token expired");
-
-                // token_expired();
-            } else {
-                console.log("token not expired");
-            }
-        } catch (err) {
-            console.log('token decode', err)
-        }
+    if (hasExpired(token)) {
+        token_expired();
     }
 
     //encrypt request
@@ -90,6 +80,5 @@ export const axiosDelete = (url, data) => {
 };
 
 function getToken() {
-    const store = new Store();
     return store.get(CONFIG.STORAGE.KEY_TOKEN);
 }
