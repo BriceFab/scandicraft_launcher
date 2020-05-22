@@ -6,6 +6,7 @@ import { withStyles, Button } from "@material-ui/core";
 import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
 import { toast } from 'react-toastify';
+import { logout } from '../actions/user';
 
 const styles = theme => ({
     root: {
@@ -94,6 +95,12 @@ class MainPage extends Component {
         }
     }
 
+    onLogout() {
+        console.log('call logout')
+
+        this.props.logout()
+    }
+
     render() {
         console.log('render state', this.state)
 
@@ -102,10 +109,13 @@ class MainPage extends Component {
                 <h1>
                     Page principale
                 </h1>
-                <Button onClick={this.onCallLaunch.bind(this)} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
+                <Button onClick={this.onCallLaunch.bind(this)} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
                     Jouer
                 </Button>
                 {this.renderTask()}
+                <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
+                    Se déconnecter
+                </Button>
             </div>
         )
     }
@@ -121,10 +131,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            // increment,
-            // decrement,
-            // incrementIfOdd,
-            // incrementAsync
+            logout
         },
         dispatch
     );

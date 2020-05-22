@@ -18,19 +18,31 @@ const Store = require('electron-store');
 const store = new Store()
 
 class LoginForm extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            waiting: false
+        }
+    }
+
     onSubmit({ ...props }) {
+        this.setState({
+            waiting: true
+        })
         this.props.login(props).then((res) => {
-            console.log('res',res)
             if (res && res.status === 200) {
-                console.log('login sucess, redirect ', this.props.history)
                 this.props.history.push(routes.LAUNCHER);
-                console.log('pushed')
             }
+            this.setState({
+                waiting: false
+            })
         });
     }
 
     render() {
         const { classes, handleSubmit, pristine, submitting } = this.props;
+        const { waiting } = this.state;
 
         return (
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -69,12 +81,12 @@ class LoginForm extends Component {
                 <Button
                     className={classes.signInButton}
                     color={'primary'}
-                    disabled={store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting}
+                    disabled={(store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting) || waiting}
                     size={'large'}
                     variant="contained"
                     type={'submit'}>
-                    Connexion
-        </Button>
+                    {waiting ? 'En cours..' : 'Connexion'}
+                </Button>
             </form>
         );
     }

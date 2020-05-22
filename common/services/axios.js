@@ -13,6 +13,8 @@ let instance = axios.create({
         'Accept': 'application/json',
         'Authorization': `Bearer ${getToken() || 'none'}`,
     },
+    responseType: 'json',
+    validateStatus: false
     // adapter: require('axios/lib/adapters/xhr')
     // adapter: require('axios/lib/adapters/http'),
 });
@@ -24,7 +26,7 @@ instance.interceptors.request.use((config) => {
         token = getToken();
     }
 
-    if (hasExpired(token)) {
+    if (token && hasExpired(token)) {
         token_expired();
     }
 
@@ -46,18 +48,17 @@ instance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-// instance.interceptors.response.use((response) => {
-//     if (response.data.encrypted) {
-//         try {
-//             response.data = jwt.verify(response.data.data, CONFIG.API.SECRET_ENCRYPTION);
-//         } catch (err) {
-//             console.log('error when decrypt response', err);
-//         }
-//     }
-//     return response;
-// }, (error) => {
-//     return Promise.reject(error);
-// });
+instance.interceptors.response.use((response) => {
+    if (response.status >= 200 && response.status < 300) {
+        // console.log('axios intercept response ok', response.data)
+        return response;
+    } else {
+        console.log('axios intercept response err', response.data)
+        return Promise.reject(response);
+    }
+}, (error) => {
+    return Promise.reject(error);
+});
 
 export const axiosGet = (url) => {
     return instance.get(url);

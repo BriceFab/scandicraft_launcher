@@ -38,6 +38,7 @@ export const register = (user) => (dispatch) => {
 
 export const login = (user) => dispatch => {
     return axiosPost(`login_check`, user).then((res) => {
+        console.log('res', res)
         dispatch({
             type: ACTIONS.USER.SET_TOKEN,
             payload: res.data.token
@@ -62,18 +63,14 @@ export const login = (user) => dispatch => {
         } else {
             store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME)
             store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD)
-            store.set(CONFIG.STORAGE.REMEMBER_ME.REMEMBER_ME.KEY, false)
+            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, false)
         }
 
         return res;
     }, (error) => {
-        let api_error = error;
-
-        alert('Mauvais login')
-
         dispatch({
             type: ACTIONS.API.ERROR,
-            payload: api_error
+            payload: error.data
         });
     })
 };
