@@ -26,7 +26,7 @@ class MainPage extends Component {
             <div>
                 Main page
                 <Button onClick={this.onCallLaunch.bind(this)} color={'primary'} variant={'contained'}>
-                    Launch
+                    Jouer
                 </Button>
             </div>
         )

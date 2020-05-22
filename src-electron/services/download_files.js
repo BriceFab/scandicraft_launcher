@@ -1,13 +1,16 @@
 const fs = require('fs');
+const path = require('path');
 import { axiosPostWithConfig } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
 
-const launcher_path = LAUNCHER_CONFIG.LAUNCHER_HOME + LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE;
+const launcher_path = path.resolve(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 
 export default async function downloadFiles(files) {
     //purg temp download file
+    console.log(`file ${launcher_path} exists: ${fs.existsSync(launcher_path)}`)
     if (fs.existsSync(launcher_path)) {
+        console.log('purg zip file ', launcher_path)
         fs.unlinkSync(launcher_path);
     }
 

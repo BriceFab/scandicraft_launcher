@@ -1,8 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const DecompressZip = require('decompress-zip');
 import { LAUNCHER_CONFIG } from '../config/launcher';
 
-const launcher_path = LAUNCHER_CONFIG.LAUNCHER_HOME + LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE;
+const launcher_path = path.resolve(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 
 export default async function installFiles() {
 
