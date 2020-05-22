@@ -13,6 +13,9 @@ import userValidator from '../../validators/user';
 import styles from '../../design/styles/loginStyle';
 import config from '../../../config/config.json';
 import routes from '../../routes/routes.json';
+const Store = require('electron-store');
+
+const store = new Store()
 
 class LoginForm extends Component {
     onSubmit({ ...props }) {
@@ -66,7 +69,7 @@ class LoginForm extends Component {
                 <Button
                     className={classes.signInButton}
                     color={'primary'}
-                    disabled={localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting}
+                    disabled={store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting}
                     size={'large'}
                     variant="contained"
                     type={'submit'}>
@@ -85,10 +88,10 @@ const validate = validateForm({
 const form = {
     form: 'LoginForm',
     validate,
-    initialValues: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY)) === true ? {
-        remember: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY),
-        username: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME),
-        password: localStorage.getItem(config.STORAGE.REMEMBER_ME.KEY_PASSWORD),
+    initialValues: store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? {
+        remember: store.get(config.STORAGE.REMEMBER_ME.KEY),
+        username: store.get(config.STORAGE.REMEMBER_ME.KEY_USERNAME),
+        password: store.get(config.STORAGE.REMEMBER_ME.KEY_PASSWORD),
     } : {}
 };
 

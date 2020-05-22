@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action) {
             state.loggedIn = true;
             console.log('reducer payload', action.payload)
             state.current = action.param;
-            // localStorage.setItem(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
+            // store.set(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
             // window.location.reload();
             return { ...state };
         }
@@ -33,6 +33,7 @@ export default function reducer(state = initialState, action) {
                 username: username,
                 roles: decoded.roles
             }
+            console.log('reduce state', state.current)
             toast.success(`Salut ${username ? username : ''} !`);
             return { ...state };
         }

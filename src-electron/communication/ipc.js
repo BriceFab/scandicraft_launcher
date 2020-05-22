@@ -12,7 +12,8 @@ let startTaskTime = null;
 const ipcRegister = () => {
 
     //Call launch minecraft
-    ipcMain.on(CONFIG_IPC.LAUNCH_SCANDICRAFT, async (event, ...args) => {
+    ipcMain.on(CONFIG_IPC.LAUNCH_SCANDICRAFT, async (event, args) => {
+
         try {
             //scan files
             updateStart('scan')
@@ -35,12 +36,15 @@ const ipcRegister = () => {
 
             //launch
             updateStart('launch')
-            launchScandiCraft();
+            launchScandiCraft(args.user);
             updateStop('launch')
 
             updateInfo(null);   //fin des tâches
         } catch (error) {
             console.log('launch error', error.response.data)
+
+            launchError(error.response.data);   //catch error in renderer
+            updateInfo(null);   //fin des tâches
         }
     })
 }
@@ -81,6 +85,13 @@ function updateInfo(data) {
     const mainWindow = getMainWindow();
     mainWindow.send(IPC_CONFIG.UPDATE_LAUNCH_TASK, {
         data
+    })
+}
+
+function launchError(error) {
+    const mainWindow = getMainWindow();
+    mainWindow.send(IPC_CONFIG.LAUNCH_ERROR, {
+        error
     })
 }
 

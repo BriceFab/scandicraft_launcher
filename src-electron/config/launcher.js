@@ -1,5 +1,27 @@
+import { app } from "electron";
+import { name } from '../../package.json';
+// const findJavaHome = require('find-java-home')
+
 export const LAUNCHER_CONFIG = {
     JAVA_HOME: 'java',
-    LAUNCHER_HOME: 'C:\\Users\\Fabrice\\AppData\\Roaming\\.ScandiCraft\\',
-    TEMP_DOWNLOAD_FILE: 'scandicraft_download.zip'
+    // LAUNCHER_HOME: 'C:\\Users\\Fabrice\\AppData\\Roaming\\.ScandiCraft\\',
+    LAUNCHER_HOME: app.getPath('userData').replace(name, '.ScandiCraft'),
+    TEMP_DOWNLOAD_FILE: 'scandicraft_download.zip',
+    LIBRARIES_DIR: 'libraries',
+    NATIVES_DIR: 'natives',
+    ASSETS_DIR: 'assets',
+    MAIN_JAR: 'scandicraft.jar'
 }
+
+// function getJavaHome() {
+//     return new Promise((resolve, reject) => {
+//         findJavaHome({ allowJre: true }, (err, home) => {
+//             if (err) {
+//                 console.log('error getting java home', err);
+//                 resolve('java')
+//             }
+//             console.log(home);
+//             resolve(home)
+//         });
+//     })
+// }

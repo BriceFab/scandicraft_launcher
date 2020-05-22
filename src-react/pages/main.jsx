@@ -5,6 +5,7 @@ import RequireAuth from '../security/require-auth';
 import { withStyles, Button } from "@material-ui/core";
 import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
+import { toast } from 'react-toastify';
 
 const styles = theme => ({
     root: {
@@ -17,13 +18,14 @@ class MainPage extends Component {
         super(props);
 
         this.state = {
-            task: null
+            task: null,
+            launch_error: null
         }
     }
 
     onCallLaunch() {
         ipcRenderer.send(CONFIG_IPC.LAUNCH_SCANDICRAFT, {
-            username: this.props.user
+            user: this.props.user
         })
     }
 
@@ -33,12 +35,20 @@ class MainPage extends Component {
         })
     }
 
+    catchLaunchError(event, err) {
+        console.log('catch lauch error', err)
+
+        toast.error(`${err.message} (code: ${err.code})`)
+    }
+
     componentDidMount() {
         ipcRenderer.on(CONFIG_IPC.UPDATE_LAUNCH_TASK, this.updateLaunchTask.bind(this))
+        ipcRenderer.on(CONFIG_IPC.LAUNCH_ERROR, this.catchLaunchError.bind(this))
     }
 
     componentWillUnmount() {
         ipcRenderer.removeListener(CONFIG_IPC.UPDATE_LAUNCH_TASK, this.updateLaunchTask.bind(this));
+        ipcRenderer.removeListener(CONFIG_IPC.LAUNCH_ERROR, this.catchLaunchError.bind(this));
     }
 
     renderTask() {
@@ -86,12 +96,13 @@ class MainPage extends Component {
 
     render() {
         console.log('render state', this.state)
+
         return (
             <div>
                 <h1>
                     Page principale
                 </h1>
-                <Button onClick={this.onCallLaunch.bind(this)} color={'primary'} variant={'contained'}>
+                <Button onClick={this.onCallLaunch.bind(this)} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
                     Jouer
                 </Button>
                 {this.renderTask()}
