@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const DecompressZip = require('decompress-zip');
 import { LAUNCHER_CONFIG } from '../config/launcher';
+import { updateTaskProgress } from '../communication/ipc';
 
 const launcher_path = path.resolve(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 
@@ -32,6 +33,7 @@ function unzip() {
         });
 
         unzipper.on('progress', function (fileIndex, fileCount) {
+            updateTaskProgress('install', `${fileIndex + 1} of ${fileCount}`)
             console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
         });
 

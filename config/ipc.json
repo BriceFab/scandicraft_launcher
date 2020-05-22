@@ -1,3 +1,4 @@
 {
-    "LAUNCH_SCANDICRAFT": "call-launch-scandicraft"
+    "LAUNCH_SCANDICRAFT": "launch-scandicraft",
+    "UPDATE_LAUNCH_TASK": "update-launch-task"
 }

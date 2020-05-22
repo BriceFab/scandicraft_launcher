@@ -3,6 +3,7 @@ const path = require('path');
 import { axiosPostWithConfig } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
+import { updateTaskProgress } from "../communication/ipc";
 
 const launcher_path = path.resolve(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 
@@ -36,6 +37,7 @@ function downloadServerFiles(files) {
                 var progress = (downloadedBytes / totalLength) * 100;
 
                 console.log('progress: ', parseInt(progress, 10))
+                updateTaskProgress('download', `${parseInt(progress, 10)}%`)
             })
 
             //Enregistre le flux
