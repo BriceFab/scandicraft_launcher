@@ -24,6 +24,7 @@ export default function reducer(state = initialState, action) {
         }
         case ACTIONS.USER.SET_TOKEN: {
             const token = action.payload;
+            console.log('set token', token)
             store.set(CONFIG.STORAGE.KEY_TOKEN, token);
             state.token = token;
             state.loggedIn = true;
@@ -39,8 +40,9 @@ export default function reducer(state = initialState, action) {
         }
         case ACTIONS.USER.LOGOUT:
             store.delete(CONFIG.STORAGE.KEY_TOKEN);
-            if (JSON.parse(store.get(CONFIG.STORAGE.REMEMBER_ME.KEY)) === false) {
+            if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) === false) {
                 store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME);
+                store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD);
             }
             state.loggedIn = false;
             state.token = null;

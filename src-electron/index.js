@@ -98,9 +98,11 @@ app.on('activate', () => {
     }
 })
 
-// process.on('uncaughtException', (err) => {
-//     console.log('main err')
-// });
+process.on('uncaughtException', (err) => {
+    console.log('main err')
+
+    //TODO Passe ton renderer
+});
 
 export function getMainWindow() {
     return mainWindow;

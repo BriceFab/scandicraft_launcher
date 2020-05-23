@@ -4,8 +4,6 @@ const Store = require('electron-store');
 import { token_expired } from '../../src-react/actions/user';
 import hasExpired from './token';
 
-const store = new Store();
-
 let instance = axios.create({
     baseURL: CONFIG.API.ENTRY_POINT,
     headers: {
@@ -20,6 +18,9 @@ let instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
+    //update token
+    config.headers.Authorization = `Bearer ${getToken() || 'none'}`;
+
     //verify token has expired
     let token = config.headers.Authorization.replace('Bearer ', '') || getToken();
     if (token === 'none') {
@@ -81,5 +82,6 @@ export const axiosDelete = (url, data) => {
 };
 
 function getToken() {
+    const store = new Store();
     return store.get(CONFIG.STORAGE.KEY_TOKEN);
 }

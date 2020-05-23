@@ -38,7 +38,7 @@ export const register = (user) => (dispatch) => {
 
 export const login = (user) => dispatch => {
     return axiosPost(`login_check`, user).then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         dispatch({
             type: ACTIONS.USER.SET_TOKEN,
             payload: res.data.token
