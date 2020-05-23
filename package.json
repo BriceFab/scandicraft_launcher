@@ -1,6 +1,6 @@
 {
   "name": "scandicraft_launcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ScandiCraft Launcher",
   "main": "./dist/electron.bundle.js",
   "scripts": {
@@ -57,7 +57,8 @@
     "productName": "ScandiCraft",
     "appId": "fr.scandicraft-mc",
     "files": [
-      "dist/**/*"
+      "dist/**/*",
+      "public/splash.html"
     ],
     "mac": {
       "category": "public.app-category.games",
@@ -110,9 +111,5 @@
     "email": "scandicraft.minecraft@gmail.com"
   },
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/fabrriva/scandicraft_launcher.git"
-  },
   "license": "UNLICENSED"
 }

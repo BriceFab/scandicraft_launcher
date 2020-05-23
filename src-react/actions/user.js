@@ -59,10 +59,8 @@ export const login = (user) => dispatch => {
         if (user.remember && JSON.parse(user.remember) === true) {
             store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
             store.set(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
-            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
         } else {
             store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME)
-            store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD)
             store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, false)
         }
 

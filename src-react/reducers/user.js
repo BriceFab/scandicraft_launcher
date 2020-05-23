@@ -42,7 +42,6 @@ export default function reducer(state = initialState, action) {
             store.delete(CONFIG.STORAGE.KEY_TOKEN);
             if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) === false) {
                 store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME);
-                store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD);
             }
             state.loggedIn = false;
             state.token = null;

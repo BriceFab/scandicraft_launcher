@@ -8,8 +8,10 @@ let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
     dev = true;
 }
+dev = false;
 
 let mainWindow = null; //pass garbage collector
+let splash = null;
 
 function createWindow() {
     // Cree la fenetre du navigateur.
@@ -24,6 +26,7 @@ function createWindow() {
             nodeIntegration: true,
             devTools: dev
         },
+        show: false,
         // backgroundColor: '#171614'
     })
 
@@ -47,6 +50,22 @@ function createWindow() {
     }
 }
 
+function createSplash() {
+    splash = new BrowserWindow({
+        width: 550,
+        height: 400,
+        transparent: true,
+        frame: false,
+        center: true,
+        alwaysOnTop: true,
+        webPreferences: {
+            devTools: false
+        },
+    });
+    splash.loadFile('public/splash.html');
+    splash.removeMenu()
+}
+
 // Disable hardware acceleration.
 // https://electronjs.org/docs/tutorial/offscreen-rendering
 app.disableHardwareAcceleration()
@@ -57,6 +76,8 @@ app.allowRendererProcessReuse = true;
 // de s'initialiser et prêt à créer des fenêtres de navigation.
 // Certaines APIs peuvent être utilisées uniquement quand cet événement est émit.
 app.whenReady().then(() => {
+    //Create windows
+    createSplash();
     createWindow();
 
     //Install dev extensions
@@ -68,6 +89,11 @@ app.whenReady().then(() => {
 
     //Register IPC
     ipcRegister();
+
+    mainWindow.once('ready-to-show', () => {
+        splash.destroy();
+        mainWindow.show();
+    });
 });
 
 // Quitter si toutes les fenêtres ont été fermées.
