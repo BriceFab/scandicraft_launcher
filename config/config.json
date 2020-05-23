@@ -9,7 +9,7 @@
         }
     },
     "API": {
-        "ENTRY_POINT": "http://localhost:8000/api",
+        "ENTRY_POINT": "https://scandicraft-mc.fr/api",
         "LAUNCHER_GET_FILES_CHECKSUM": "launcher/checksum",
         "LAUNCHER_GET_FILES": "launcher/download"
     }

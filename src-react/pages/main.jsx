@@ -37,9 +37,14 @@ class MainPage extends Component {
     }
 
     catchLaunchError(event, err) {
-        console.log('catch lauch error', err)
+        const { error } = err;
+        console.log('renderer lauch error', error)
 
-        toast.error(`${err.message} (code: ${err.code})`)
+        if (error.message && error.code) {
+            toast.error(`${error.message} (code: ${error.code})`)
+        } else {
+            toast.error('Une erreure est survenue.. Contactez un membre du staff si l\'erreur persiste');
+        }
     }
 
     componentDidMount() {

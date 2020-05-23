@@ -4,6 +4,7 @@ const crypto = require('crypto');
 import { axiosGet } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
+import { launchError } from '../communication/ipc';
 
 export default async function checkFiles() {
     let change_files = [];
@@ -13,7 +14,9 @@ export default async function checkFiles() {
         fs.mkdirSync(LAUNCHER_CONFIG.LAUNCHER_HOME);
     }
 
-    const files_checksum = await getServerFiles()
+    const files_checksum = await getServerFiles().catch((err) => {
+        throw err.data
+    })
 
     files_checksum.forEach((file) => {
         const file_path = path.join(LAUNCHER_CONFIG.LAUNCHER_HOME, file.name);

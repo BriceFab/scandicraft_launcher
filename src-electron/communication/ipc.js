@@ -41,9 +41,9 @@ const ipcRegister = () => {
 
             updateInfo(null);   //fin des tâches
         } catch (error) {
-            console.log('launch error', error.response.data)
+            console.log('launch catch error')
 
-            launchError(error.response.data);   //catch error in renderer
+            launchError(error);   //catch error in renderer
             updateInfo(null);   //fin des tâches
         }
     })
@@ -88,7 +88,7 @@ function updateInfo(data) {
     })
 }
 
-function launchError(error) {
+export function launchError(error) {
     const mainWindow = getMainWindow();
     mainWindow.send(IPC_CONFIG.LAUNCH_ERROR, {
         error

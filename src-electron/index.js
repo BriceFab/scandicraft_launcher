@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron')
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import AppUpdater from './auto-update/updater';
 import ipcRegister from './communication/ipc';
+import CONFIG from '../config/config.json';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -76,6 +77,17 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
+
+    //remove token
+    const Store = require('electron-store');
+    const store = new Store();
+
+    if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) === undefined || store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) !== true) {
+        console.log('on close, clear token')
+        store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY);
+    } else {
+        console.log('on close, keep token', store.get(CONFIG.STORAGE.REMEMBER_ME.KEY))
+    }
 })
 
 app.on('activate', () => {
@@ -85,6 +97,10 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
+// process.on('uncaughtException', (err) => {
+//     console.log('main err')
+// });
 
 export function getMainWindow() {
     return mainWindow;

@@ -81,7 +81,7 @@ class LoginForm extends Component {
                 <Button
                     className={classes.signInButton}
                     color={'primary'}
-                    disabled={(store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? false : pristine || submitting) || waiting}
+                    disabled={(store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && store.get(config.STORAGE.REMEMBER_ME.KEY) === true ? false : pristine || submitting) || waiting}
                     size={'large'}
                     variant="contained"
                     type={'submit'}>
@@ -100,7 +100,7 @@ const validate = validateForm({
 const form = {
     form: 'LoginForm',
     validate,
-    initialValues: store.get(config.STORAGE.REMEMBER_ME.KEY) !== 'undefined' && JSON.parse(store.get(config.STORAGE.REMEMBER_ME.KEY)) === true ? {
+    initialValues: store.get(config.STORAGE.REMEMBER_ME.KEY) !== undefined && store.get(config.STORAGE.REMEMBER_ME.KEY) === true ? {
         remember: store.get(config.STORAGE.REMEMBER_ME.KEY),
         username: store.get(config.STORAGE.REMEMBER_ME.KEY_USERNAME),
         password: store.get(config.STORAGE.REMEMBER_ME.KEY_PASSWORD),

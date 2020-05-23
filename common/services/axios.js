@@ -53,7 +53,7 @@ instance.interceptors.response.use((response) => {
         // console.log('axios intercept response ok', response.data)
         return response;
     } else {
-        console.log('axios intercept response err', response.data)
+        // console.log('axios intercept response err', response.data)
         return Promise.reject(response);
     }
 }, (error) => {

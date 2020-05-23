@@ -16,7 +16,9 @@ export default async function downloadFiles(files) {
     }
 
     //download files
-    const downloaded_bytes = await downloadServerFiles(files);
+    const downloaded_bytes = await downloadServerFiles(files).catch((err) => {
+        throw err.data
+    })
 
     console.log(`Successful downloaded ${downloaded_bytes} bytes`)
 }
