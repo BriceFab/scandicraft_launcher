@@ -3,7 +3,7 @@ const path = require('path');
 import { axiosPostWithConfig } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
-import { updateTaskProgress } from "../communication/ipc";
+import { updateTaskProgress } from "../communication/launch";
 
 const launcher_path = path.join(LAUNCHER_CONFIG.LAUNCHER_HOME, LAUNCHER_CONFIG.TEMP_DOWNLOAD_FILE);
 

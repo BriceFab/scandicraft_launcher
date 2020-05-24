@@ -4,7 +4,6 @@ const crypto = require('crypto');
 import { axiosGet } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { LAUNCHER_CONFIG } from '../config/launcher';
-import { launchError } from '../communication/ipc';
 
 export default async function checkFiles() {
     let change_files = [];

@@ -1,5 +1,6 @@
 {
     "LAUNCH_SCANDICRAFT": "launch-scandicraft",
     "UPDATE_LAUNCH_TASK": "update-launch-task",
-    "LAUNCH_ERROR": "launch-error"
+    "LAUNCH_ERROR": "launch-error",
+    "UNCAUGHT_EXCEPTION": "uncaught-exception"
 }

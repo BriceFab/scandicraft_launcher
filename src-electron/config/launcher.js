@@ -4,7 +4,6 @@ import { name } from '../../package.json';
 
 export const LAUNCHER_CONFIG = {
     JAVA_HOME: 'java',
-    // LAUNCHER_HOME: 'C:\\Users\\Fabrice\\AppData\\Roaming\\.ScandiCraft\\',
     LAUNCHER_HOME: app.getPath('userData').replace(name, '.ScandiCraft'),
     TEMP_DOWNLOAD_FILE: 'scandicraft_download.zip',
     LIBRARIES_DIR: 'libraries',
@@ -12,6 +11,9 @@ export const LAUNCHER_CONFIG = {
     ASSETS_DIR: 'assets',
     MAIN_JAR: 'scandicraft.jar'
 }
+
+const log = require('electron-log');
+log.info('[ScandiCraft] Launcher config', LAUNCHER_CONFIG)
 
 // function getJavaHome() {
 //     return new Promise((resolve, reject) => {

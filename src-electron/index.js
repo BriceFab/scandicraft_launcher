@@ -3,6 +3,7 @@ import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electro
 import AppUpdater from './auto-update/updater';
 import ipcRegister from './communication/ipc';
 import CONFIG from '../config/config.json';
+import { ipcRenderer } from 'electron';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -77,7 +78,9 @@ app.allowRendererProcessReuse = true;
 // Certaines APIs peuvent être utilisées uniquement quand cet événement est émit.
 app.whenReady().then(() => {
     //Create windows
-    createSplash();
+    if (process.platform !== 'linux') {
+        createSplash();
+    }
     createWindow();
 
     //Install dev extensions
@@ -91,7 +94,9 @@ app.whenReady().then(() => {
     ipcRegister();
 
     mainWindow.once('ready-to-show', () => {
-        splash.destroy();
+        if (process.platform !== 'linux') {
+            splash.destroy();
+        }
         mainWindow.show();
     });
 });
@@ -108,7 +113,7 @@ app.on('window-all-closed', () => {
     const Store = require('electron-store');
     const store = new Store();
 
-    if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) === undefined || store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) !== true) {
+    if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) !== true) {
         console.log('on close, clear token')
         store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY);
     } else {
@@ -125,9 +130,13 @@ app.on('activate', () => {
 })
 
 process.on('uncaughtException', (err) => {
-    console.log('main err')
+    // console.log('main err', err.stack)
+    const log = require('electron-log');
+    log.error('[ScandiCraft] uncaughtException on main', err.stack)
 
-    //TODO Passe ton renderer
+    const IPC_CONFIG = require('../config/ipc.json');
+
+    mainWindow.send(IPC_CONFIG.UNCAUGHT_EXCEPTION, err.stack);
 });
 
 export function getMainWindow() {
