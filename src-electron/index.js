@@ -3,13 +3,11 @@ import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electro
 import AppUpdater from './auto-update/updater';
 import ipcRegister from './communication/ipc';
 import CONFIG from '../config/config.json';
-import { ipcRenderer } from 'electron';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
     dev = true;
 }
-dev = false;
 
 let mainWindow = null; //pass garbage collector
 let splash = null;

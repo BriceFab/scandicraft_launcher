@@ -1,5 +1,5 @@
 {
-    "WEB_BASE_URL": "https://scandicraft-mc.fr/",
+    "WEB_BASE_URL": "https://www.scandicraft-mc.fr/",
     "STORAGE": {
         "KEY_TOKEN": "user_token",
         "REMEMBER_ME": {
@@ -8,7 +8,7 @@
         }
     },
     "API": {
-        "ENTRY_POINT": "https://scandicraft-mc.fr/api",
+        "ENTRY_POINT": "https://www.scandicraft-mc.fr/api",
         "LAUNCHER_GET_FILES_CHECKSUM": "launcher/checksum",
         "LAUNCHER_GET_FILES": "launcher/download"
     }
