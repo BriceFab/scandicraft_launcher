@@ -1,3 +1,5 @@
+export const red = '#b30000'; //scandicraft main color
+
 export const white = '#FFFFFF';
 
 export const grey = {
@@ -20,8 +22,6 @@ export const blue = '#0767DB';
 export const green = '#45B880';
 
 export const orange = '#FFB822';
-
-export const red = '#ED4740';
 
 export const primary = {
   main: blue,

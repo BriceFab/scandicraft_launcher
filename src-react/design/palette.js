@@ -1,4 +1,4 @@
-import { white, black } from './colors';
+import { white, black, red } from './colors';
 
 export default {
   common: {
@@ -9,9 +9,9 @@ export default {
   },
   primary: {
     contrastText: white,
-    main: '#0767DB',
-    light: '#F6F9FD',
-    dark: '#0B48A0'
+    main: red,
+    light: red,
+    dark: 'gray'  //hover
   },
   secondary: {
     contrastText: white,

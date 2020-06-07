@@ -9,6 +9,7 @@ import { ipcRenderer } from 'electron';
 // Theme
 import theme from '../design/theme';
 import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 // Validator messages
 import '../validators/messages';
