@@ -2,10 +2,9 @@ const Store = require('electron-store');
 const CryptoJS = require("crypto-js");
 
 export const store = new Store();
-const secretKey = "alfsdjalsdf";
-const IV = "o8a7sdf97asdf";
+const secretKey = CryptoJS.enc.Utf8.parse("alfsdjalsdf");
 const options = {
-    iv: CryptoJS.enc.Utf8.parse(IV),
+    iv: CryptoJS.enc.Utf8.parse("o8a7sdf97asdf"),
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7
 }
@@ -21,7 +20,7 @@ export function storeGet(key) {
         console.log('value decrypted', decrypted_value)
         return decrypted_value;
     } else {
-        console.warn('store doesn\'t have key', crypted_key)
+        console.warn('store doesn\'t have key', key)
     }
     return null;
 }
@@ -33,16 +32,28 @@ export function storeSet(key, data) {
 
 function encrypt(message) {
     console.log('encrypt', message)
-    return CryptoJS.AES.encrypt(JSON.stringify({ message }), CryptoJS.enc.Utf8.parse(secretKey), options).toString();
+    let formated_message = isJson ? JSON.stringify(message) : message;
+    return CryptoJS.AES.encrypt(formated_message, secretKey, options).toString(CryptoJS.format.Utf8);
 }
 
 function decrypt(crypted_message) {
     console.log('decrypt', crypted_message)
-    var bytes = CryptoJS.AES.decrypt(crypted_message, CryptoJS.enc.Utf8.parse(secretKey), options);
+    var bytes = CryptoJS.AES.decrypt(crypted_message, secretKey, options);
     var decrypted_data = bytes.toString(CryptoJS.enc.Utf8);
+    console.log('decrypt bytes', bytes)
+    console.log('isJson', decrypted_data)
     console.log('decrypt data', decrypted_data.length)
     if (decrypted_data.length > 0) {
         return JSON.parse(decrypted_data);
     }
     return null;
+}
+
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }
