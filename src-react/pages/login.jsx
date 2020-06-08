@@ -6,13 +6,10 @@ import { connect } from 'react-redux';
 import LoginForm from '../components/forms/login'
 import { Link, Grid, Paper, withStyles, Box } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { makeStyles } from '@material-ui/core/styles';
+import logo from '../../public/assets/images/logo.png';
+import background from '../../public/assets/images/login_background.png';
 
 function Copyright() {
     return (
@@ -33,11 +30,14 @@ const styles = theme => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: `url(${background})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'start'
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -51,11 +51,15 @@ const styles = theme => ({
     },
     form: {
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
     },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
+    paperGrid: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center'
     },
+    logo: {
+        width: '80%'
+    }
 });
 
 class LoginPage extends Component {
@@ -65,8 +69,10 @@ class LoginPage extends Component {
         return (
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
-                <Grid item xs={5} className={classes.image} />
-                <Grid item xs={7} component={Paper} elevation={6} square>
+                <Grid item xs={5} className={classes.image}>
+                    <img src={logo} className={classes.logo} />
+                </Grid>
+                <Grid item xs={7} component={Paper} elevation={6} square className={classes.paperGrid}>
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>
                             <LockOutlinedIcon />

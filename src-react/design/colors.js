@@ -1,5 +1,7 @@
 export const red = '#b30000'; //scandicraft main color
 
+export const secondaryColor = '#333333';  //gray
+
 export const white = '#FFFFFF';
 
 export const grey = {

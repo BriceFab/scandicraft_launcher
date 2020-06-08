@@ -1,8 +1,8 @@
 import axios from 'axios';
 import CONFIG from '../../config/config.json';
-const Store = require('electron-store');
 import { token_expired } from '../../src-react/actions/user';
 import hasExpired from './token';
+import { storeGet } from '../../common/services/store';
 
 let instance = axios.create({
     baseURL: CONFIG.API.ENTRY_POINT,
@@ -82,6 +82,5 @@ export const axiosDelete = (url, data) => {
 };
 
 function getToken() {
-    const store = new Store();
-    return store.get(CONFIG.STORAGE.KEY_TOKEN);
+    return storeGet(CONFIG.STORAGE.KEY_TOKEN)
 }

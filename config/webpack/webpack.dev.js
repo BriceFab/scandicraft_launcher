@@ -69,6 +69,13 @@ const rendererConfig = {
                     'css-loader',
                 ],
             },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                exclude: /node_modules/,
+                use: [
+                    'file-loader',
+                ],
+            },
         ]
     },
     resolve: {

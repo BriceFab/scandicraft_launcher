@@ -3,7 +3,7 @@ import { LAUNCHER_CONFIG } from '../config/launcher';
 import CONFIG from '../../config/config.json';
 const fs = require('fs');
 const path = require('path');
-const Store = require('electron-store');
+import { storeGet } from '../../common/services/store';
 
 export function launchScandiCraft(user = null) {
     const args = getArgs(user);
@@ -60,8 +60,7 @@ function getArgs(user) {
     args.push('net.scandicraft.client.Main');
 
     //Token
-    const store = new Store();
-    const api_token = store.get(CONFIG.STORAGE.KEY_TOKEN);
+    const api_token = storeGet(CONFIG.STORAGE.KEY_TOKEN);
 
     //Game Parameters
     args = args.concat([

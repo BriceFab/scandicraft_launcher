@@ -1,10 +1,8 @@
 import { toast } from "react-toastify";
 import { ACTIONS } from "../actions/actions_types";
 import CONFIG from '../../config/config.json';
-const Store = require('electron-store');
 import jwt from 'jsonwebtoken';
-
-const store = new Store();
+import { storeSet, store, storeGet } from '../../common/services/store';
 
 const initialState = {
     loggedIn: false,
@@ -18,14 +16,14 @@ export default function reducer(state = initialState, action) {
             state.loggedIn = true;
             console.log('reducer payload', action.payload)
             state.current = action.param;
-            // store.set(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
+            // storeSet(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
             // window.location.reload();
             return { ...state };
         }
         case ACTIONS.USER.SET_TOKEN: {
             const token = action.payload;
             console.log('set token', token)
-            store.set(CONFIG.STORAGE.KEY_TOKEN, token);
+            storeSet(CONFIG.STORAGE.KEY_TOKEN, token);
             state.token = token;
             state.loggedIn = true;
             let decoded = jwt.decode(token);
@@ -40,7 +38,7 @@ export default function reducer(state = initialState, action) {
         }
         case ACTIONS.USER.LOGOUT:
             store.delete(CONFIG.STORAGE.KEY_TOKEN);
-            if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) === false) {
+            if (storeGet(CONFIG.STORAGE.REMEMBER_ME.KEY) === false) {
                 store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME);
             }
             state.loggedIn = false;

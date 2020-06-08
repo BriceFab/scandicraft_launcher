@@ -3,6 +3,7 @@ import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electro
 import AppUpdater from './auto-update/updater';
 import ipcRegister from './communication/ipc';
 import CONFIG from '../config/config.json';
+import { storeGet, store } from '../common/services/store';
 
 let dev = false;
 if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
@@ -15,8 +16,8 @@ let splash = null;
 function createWindow() {
     // Cree la fenetre du navigateur.
     mainWindow = new BrowserWindow({
-        minWidth: 750,
-        minHeight: 450,
+        minWidth: 850,
+        minHeight: 630,
         width: 950,
         height: 650,
         hasShadow: false,
@@ -108,14 +109,11 @@ app.on('window-all-closed', () => {
     }
 
     //remove token
-    const Store = require('electron-store');
-    const store = new Store();
-
-    if (store.get(CONFIG.STORAGE.REMEMBER_ME.KEY) !== true) {
+    if (storeGet(CONFIG.STORAGE.REMEMBER_ME.KEY) !== true) {
         console.log('on close, clear token')
         store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY);
     } else {
-        console.log('on close, keep token', store.get(CONFIG.STORAGE.REMEMBER_ME.KEY))
+        console.log('on close, keep token', storeGet(CONFIG.STORAGE.REMEMBER_ME.KEY))
     }
 })
 

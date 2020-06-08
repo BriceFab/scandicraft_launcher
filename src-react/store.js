@@ -4,9 +4,9 @@ import { routerMiddleware } from 'connected-react-router'
 import createRootReducer from './reducers'
 import thunk from 'redux-thunk';
 import { setToken } from './actions/user';
-const Store = require('electron-store');
 import CONFIG from '../config/config.json';
 import hasExpired from '../common/services/token';
+import { storeGet } from '../common/services/store';
 
 export const history = createHashHistory()
 const api = CONFIG.API_ENTRY_POINT;
@@ -26,7 +26,7 @@ export default function configureStore(preloadedState) {
     )
 
     //dispatch login with token
-    const token = new Store().get(CONFIG.STORAGE.KEY_TOKEN);
+    const token = storeGet(CONFIG.STORAGE.KEY_TOKEN);
     if (!hasExpired(token)) {
         store.dispatch(setToken(token))
     }

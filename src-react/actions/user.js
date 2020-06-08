@@ -1,11 +1,9 @@
 import { ACTIONS } from "./actions_types";
 import routes from '../routes/routes.json';
 import { axiosPost } from "../../common/services/axios";
-const Store = require('electron-store');
 import CONFIG from '../../config/config.json';
 import { toast } from "react-toastify";
-
-const store = new Store();
+import { store, storeSet } from '../../common/services/store';
 
 export const setToken = (token) => (dispatch) => {
     dispatch({
@@ -57,11 +55,11 @@ export const login = (user) => dispatch => {
         });
 
         if (user.remember && JSON.parse(user.remember) === true) {
-            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
-            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
+            storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
+            storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
         } else {
             store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME)
-            store.set(CONFIG.STORAGE.REMEMBER_ME.KEY, false)
+            storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, false)
         }
 
         return res;
