@@ -3,6 +3,12 @@ const CryptoJS = require("crypto-js");
 
 export const store = new Store();
 const secretKey = "alfsdjalsdf";
+const IV = "o8a7sdf97asdf";
+const options = {
+    iv: CryptoJS.enc.Utf8.parse(IV),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+}
 
 export function storeGet(key) {
     var crypted_key = encrypt(key);
@@ -15,7 +21,7 @@ export function storeGet(key) {
         console.log('value decrypted', decrypted_value)
         return decrypted_value;
     } else {
-        console.warn('store doesn\'t have key', key)
+        console.warn('store doesn\'t have key', crypted_key)
     }
     return null;
 }
@@ -27,12 +33,16 @@ export function storeSet(key, data) {
 
 function encrypt(message) {
     console.log('encrypt', message)
-    return CryptoJS.HmacSHA256(JSON.stringify({ message }), secretKey).toString();
+    return CryptoJS.AES.encrypt(JSON.stringify({ message }), CryptoJS.enc.Utf8.parse(secretKey), options).toString();
 }
 
 function decrypt(crypted_message) {
     console.log('decrypt', crypted_message)
-    var bytes = CryptoJS.AES.decrypt(crypted_message, secretKey);
-    var utf8_data = bytes.toString(CryptoJS.enc.Utf8);
-    return JSON.parse(utf8_data);
+    var bytes = CryptoJS.AES.decrypt(crypted_message, CryptoJS.enc.Utf8.parse(secretKey), options);
+    var decrypted_data = bytes.toString(CryptoJS.enc.Utf8);
+    console.log('decrypt data', decrypted_data.length)
+    if (decrypted_data.length > 0) {
+        return JSON.parse(decrypted_data);
+    }
+    return null;
 }
