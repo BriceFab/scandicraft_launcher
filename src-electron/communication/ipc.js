@@ -5,12 +5,10 @@ import { ipcMain } from 'electron';
 
 const ipcRegister = () => {
 
-    //Call launch minecraft
+    //Call launch minecraft from front
     ipcMain.on(CONFIG_IPC.LAUNCH_SCANDICRAFT, async (event, args) => {
         require('./launch').onCall(event, args);
-    })
-
-    //Call auto update
+    });
 }
 
 export default ipcRegister;

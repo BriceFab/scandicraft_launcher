@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Typography } from '@material-ui/core';
 import CONFIG_IPC from '../../config/ipc.json';
 import { ipcRenderer } from 'electron';
+import AppUpdate from '../pages/app_update';
 
 // Theme
 import theme from '../design/theme';
@@ -17,23 +18,50 @@ import '../validators/messages';
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isCheckingUpdate: false
+        }
+    }
+
     componentDidMount() {
         ipcRenderer.on(CONFIG_IPC.UNCAUGHT_EXCEPTION, this.uncaughtExceptionOnMain.bind(this))
+        ipcRenderer.on(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, this.checkForUpdate.bind(this));
     }
 
     componentWillUnmount() {
         ipcRenderer.removeListener(CONFIG_IPC.UNCAUGHT_EXCEPTION, this.uncaughtExceptionOnMain.bind(this));
+        ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, this.checkForUpdate.bind(this));
     }
 
     uncaughtExceptionOnMain(event, error) {
         toast.error('Une erreure est survenue (Main Process)');
     }
 
+    checkForUpdate(event, data) {
+        this.changeUpdateState(true);
+    }
+
+    changeUpdateState(isChecking) {
+        this.setState({
+            isCheckingUpdate: isChecking
+        })
+    }
+
     render() {
+        const { isCheckingUpdate } = this.state;
+
+        let app_component = <Routes />
+        // if (isCheckingUpdate) {
+        //     app_component = <AppUpdate changeUpdateState={this.changeUpdateState.bind(this)} />
+        // }
+
         return (
             <Suspense fallback={<Typography component={'h1'}>Chargement..</Typography>}>
                 <ThemeProvider theme={theme}>
-                    <Routes />
+                    {app_component}
                 </ThemeProvider>
                 <ToastContainer
                     position={'top-right'}

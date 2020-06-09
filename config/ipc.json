@@ -2,5 +2,15 @@
     "LAUNCH_SCANDICRAFT": "launch-scandicraft",
     "UPDATE_LAUNCH_TASK": "update-launch-task",
     "LAUNCH_ERROR": "launch-error",
-    "UNCAUGHT_EXCEPTION": "uncaught-exception"
+    "UNCAUGHT_EXCEPTION": "uncaught-exception",
+    "APP_UPDATE": {
+        "CHECK_FOR_UPDATE": "app_update_check_for_update",
+        "UPDATE_AVAILABLE": "app_update_available",
+        "UPDATE_NOT_AVAILABLE": "app_update_not_available",
+        "DOWLOAD_PROGRESS": "app_update_download_progress",
+        "UPDATE_DOWLOADED": "app_update_downloaded",
+        "UPDATE_CANCELLED": "app_update_cancelled",
+        "LOGIN": "app_update_login",
+        "ERROR": "app_update_error"
+    }
 }

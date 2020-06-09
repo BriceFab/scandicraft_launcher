@@ -48,8 +48,8 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        ipcRenderer.on(CONFIG_IPC.UPDATE_LAUNCH_TASK, this.updateLaunchTask.bind(this))
-        ipcRenderer.on(CONFIG_IPC.LAUNCH_ERROR, this.catchLaunchError.bind(this))
+        ipcRenderer.on(CONFIG_IPC.UPDATE_LAUNCH_TASK, this.updateLaunchTask.bind(this));
+        ipcRenderer.on(CONFIG_IPC.LAUNCH_ERROR, this.catchLaunchError.bind(this));
     }
 
     componentWillUnmount() {

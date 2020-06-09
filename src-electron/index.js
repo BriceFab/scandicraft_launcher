@@ -17,9 +17,9 @@ function createWindow() {
     // Cree la fenetre du navigateur.
     mainWindow = new BrowserWindow({
         minWidth: 850,
-        minHeight: 630,
+        minHeight: 610,
         width: 950,
-        height: 650,
+        height: 620,
         hasShadow: false,
         // frame: false,
         webPreferences: {
@@ -41,12 +41,6 @@ function createWindow() {
     // Ouvre les DevTools.
     if (dev) {
         mainWindow.webContents.openDevTools()
-    }
-
-    //check update
-    if (!dev) {
-        const updater = new AppUpdater();
-        updater.checkUpdate();
     }
 }
 
@@ -77,9 +71,9 @@ app.allowRendererProcessReuse = true;
 // Certaines APIs peuvent être utilisées uniquement quand cet événement est émit.
 app.whenReady().then(() => {
     //Create windows
-    if (process.platform !== 'linux') {
-        createSplash();
-    }
+    // if (process.platform !== 'linux') {
+    createSplash();
+    // }
     createWindow();
 
     //Install dev extensions
@@ -93,10 +87,16 @@ app.whenReady().then(() => {
     ipcRegister();
 
     mainWindow.once('ready-to-show', () => {
-        if (process.platform !== 'linux') {
-            splash.destroy();
-        }
+        // if (process.platform !== 'linux') {
+        splash.destroy();
+        // }
         mainWindow.show();
+
+        //check update
+        if (true || !dev) {
+            const updater = new AppUpdater();
+            updater.checkUpdate();
+        }
     });
 });
 
