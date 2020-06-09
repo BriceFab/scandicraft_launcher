@@ -100,7 +100,8 @@ const form = {
     validate,
     initialValues: storeGet(config.STORAGE.REMEMBER_ME.KEY) !== null && storeGet(config.STORAGE.REMEMBER_ME.KEY) === true ? {
         remember: storeGet(config.STORAGE.REMEMBER_ME.KEY),
-        username: storeGet(config.STORAGE.REMEMBER_ME.KEY_USERNAME)
+        username: storeGet(config.STORAGE.REMEMBER_ME.KEY_USERNAME),
+        password: storeGet(config.STORAGE.REMEMBER_ME.KEY_PASSWORD)
     } : {}
 };
 

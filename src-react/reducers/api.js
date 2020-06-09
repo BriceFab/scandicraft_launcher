@@ -12,7 +12,8 @@ export default function reducer(state = initialState, action) {
         default:
             return state;
         case ACTIONS.API.ERROR:
-            toast.error(`api error: ${action.payload.message}`)
+            let message = action.payload.message ? action.payload.messages : 'Une erreur est survenue..';
+            toast.error(`Erreur: ${action.payload.message}`)
             console.log('api error payload', action.payload)
             // state.messages = displayError(action.payload);
             // state.response = action.payload.response;

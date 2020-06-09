@@ -5,7 +5,8 @@
         "KEY_TOKEN": "user_token",
         "REMEMBER_ME": {
             "KEY": "remember_me",
-            "KEY_USERNAME": "user_name"
+            "KEY_USERNAME": "user_name",
+            "KEY_PASSWORD": "user_password"
         }
     },
     "API": {

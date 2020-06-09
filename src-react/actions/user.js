@@ -59,8 +59,10 @@ export const login = (user) => dispatch => {
             console.log('storage set remember me', JSON.stringify(true))
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
+            storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
         } else {
             store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME)
+            store.delete(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD)
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, false)
         }
 
