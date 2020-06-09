@@ -1,6 +1,7 @@
 {
     "WEB_BASE_URL": "https://www.scandicraft-mc.fr/",
     "STORAGE": {
+        "KEY": "T8x+R*6bR6dcAt{/[n6g$3v/2M)J3D6W",
         "KEY_TOKEN": "user_token",
         "REMEMBER_ME": {
             "KEY": "remember_me",

@@ -54,7 +54,9 @@ export const login = (user) => dispatch => {
             }
         });
 
+
         if (user.remember && JSON.parse(user.remember) === true) {
+            console.log('storage set remember me', JSON.stringify(true))
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
         } else {
