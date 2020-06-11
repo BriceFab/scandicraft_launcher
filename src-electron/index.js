@@ -93,8 +93,8 @@ app.whenReady().then(() => {
         mainWindow.show();
 
         //check update
-        if (true || !dev) {
-            const updater = new AppUpdater();
+        if (!dev) {
+            const updater = new AppUpdater(dev);
             updater.checkUpdate();
         }
     });

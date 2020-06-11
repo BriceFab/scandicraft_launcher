@@ -4,7 +4,7 @@ import { getMainWindow } from "../index";
 
 export default class AppUpdater {
 
-    constructor() {
+    constructor(dev) {
         const log = require("electron-log")
         log.transports.file.level = 'info';
         autoUpdater.logger = log;
@@ -12,65 +12,73 @@ export default class AppUpdater {
         autoUpdater.allowDowngrade = false;
         this.registerListeners();
 
+        this.dev = dev;
         this.mainWindow = getMainWindow();
     }
 
     checkUpdate() {
         autoUpdater.checkForUpdates();
-        // autoUpdater.checkForUpdatesAndNotify();
-
-        //Send to front
-        // console.log('fake check-for-update')
-        this.mainWindow.send(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, null);
     }
 
     registerListeners() {
         autoUpdater.once('checking-for-update', () => {
-            console.log('BriceFab auto-update Checking for updates');
+            console.log('auto-update Checking for updates');
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, null);
         })
         autoUpdater.on('error', (error) => {
-            console.log('BriceFab auto-update error', error);
+            console.log('auto-update error', error);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.ERROR, error);
         })
         autoUpdater.on('update-available', (info) => {
-            console.log('BriceFab auto-update availabe', info);
+            console.log('auto-update availabe', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_AVAILABLE, info);
         })
         autoUpdater.on('update-not-available', (info) => {
-            console.log('BriceFab auto-update not availabe', info);
+            console.log('auto-update not availabe', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_NOT_AVAILABLE, info);
+
+            //Update finish
+            this.sendUpdateFinish();
         })
-        autoUpdater.on('download-progress', (progress, bytesPerSecond, percent, total, transferred) => {
-            console.log('BriceFab auto-update download-progress', progress, bytesPerSecond, percent, total, transferred);
+        autoUpdater.on('download-progress', (info) => {
+            console.log('auto-update download-progress', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.DOWLOAD_PROGRESS, {
-                progress, bytesPerSecond, percent, total, transferred
+                info
             });
         })
         autoUpdater.on('update-downloaded', (info) => {
-            console.log('BriceFab auto-update update-downloaded', info);
+            console.log('auto-update update-downloaded', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_DOWLOADED, info);
 
-            //Quit and install
-            autoUpdater.quitAndInstall();
+            //Quit and install directly
+            if (!this.dev) {
+                autoUpdater.quitAndInstall();
+            }
         })
         autoUpdater.on('update-cancelled', (info) => {
-            console.log('BriceFab auto-update update-cancelled', info);
+            console.log('auto-update update-cancelled', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_CANCELLED, info);
+
+            //Update finish
+            this.sendUpdateFinish();
         })
+    }
+
+    sendUpdateFinish() {
+        this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_FINISH, null);
     }
 }

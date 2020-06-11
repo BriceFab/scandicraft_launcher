@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
-import { withStyles } from "@material-ui/core";
+import { withStyles, Grid, Paper, Typography, CircularProgress } from "@material-ui/core";
 import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
-import { toast } from 'react-toastify';
+import background from '../../public/assets/images/login_background.png';
+import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 
 const styles = theme => ({
-    root: {
-        padding: theme.spacing(4)
+    image: {
+        height: '100vh',    //full height
+        backgroundImage: `url(${background})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'start'
     },
+    paper: {
+        padding: theme.spacing(10, 22),
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
+    title: {
+        fontWeight: 'bold'
+    },
+    progress: {
+        marginTop: 20,
+    },
+    progressGrid: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    progressWithLabel: {
+        height: '70px !important',
+        width: '70px !important',
+    }
 });
 
 class AppUpdate extends Component {
@@ -15,7 +43,9 @@ class AppUpdate extends Component {
         super(props);
 
         this.state = {
-            task_name: null
+            info: 'Recherche en cours..',
+            isDownloading: false,
+            downloadInfo: null
         }
     }
 
@@ -38,44 +68,81 @@ class AppUpdate extends Component {
     }
 
     onError(event, error) {
+        this.setState({
+            isDownloading: false,
+            info: 'Update erreur.. Relancez le launcher !'
+        })
         console.error('Update error', error)
-        toast.error('Update erreur')
     }
 
     updateAvailable(event, info) {
         console.info('Update available', info)
-        toast.info('Update available')
+        this.setState({
+            isDownloading: false,
+            info: 'Mise à jour trouvée.'
+        })
     }
 
     updateNotAvailable(event, info) {
         console.info('Update not available', info)
-        toast.info('Update not available')
+        this.setState({
+            isDownloading: false,
+            info: 'Aucune mise à jour.'
+        })
     }
 
     onDownloadProgress(event, info) {
         console.info('Update on download progress', info)
-        toast.info('Update download progress')
+        this.setState({
+            isDownloading: true,
+            info: 'Téléchargement en cours..',
+            downloadInfo: info.info
+        })
     }
 
     updateDownloaded(event, info) {
         console.info('Update downloaded', info)
-        toast.info('Update downloaded')
+        this.setState({
+            isDownloading: false,
+            info: 'L\'installation va se lancer.'
+        })
     }
 
     updateCancelled(event, info) {
         console.info('Update cancelled', info)
-        toast.info('Update cancelled')
+        this.setState({
+            isDownloading: false,
+            info: 'Mise à jour annulée.'
+        })
     }
 
     render() {
+        const { classes } = this.props;
+        const { info, isDownloading, downloadInfo } = this.state;
+
+        let loadingComponent = <CircularProgress color="primary" className={classes.progress} />;
+        if (isDownloading) {
+            loadingComponent = <CircularProgressWithLabel value={downloadInfo !== null ? downloadInfo.percent : 100} className={classes.progressWithLabel} />
+        }
+
         return (
-            <div>
-                App update
-                <p>
-                    Task name:
-                    {this.state.task_name}
-                </p>
-            </div>
+            <Grid container component="main" className={classes.image}>
+                <Paper elevation={3} className={classes.paper}>
+                    <Typography variant="h1" component="h1" color={'primary'} className={classes.title}>
+                        Mise à jour
+                    </Typography>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" component="h2">
+                                {info}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} className={isDownloading ? `${classes.progressGrid} ${classes.progress}` : classes.progressGrid}>
+                            {loadingComponent}
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Grid>
         );
     }
 }

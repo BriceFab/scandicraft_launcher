@@ -1,13 +1,12 @@
 {
   "name": "scandicraft_launcher",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "ScandiCraft Launcher",
   "main": "./dist/electron.bundle.js",
   "scripts": {
     "pack-dev": "npx webpack --config ./config/webpack/webpack.dev.js",
     "pack-prod": "npx webpack --config ./config/webpack/webpack.prod.js",
-    "build-win64": "npm run pack-prod && electron-builder build --win --x64 --ia32",
-    "build-win32": "npm run pack-prod && electron-builder build --win --x32",
+    "build-win": "npm run pack-prod && electron-builder build --win --x64 --ia32",
     "build-mac": "npm run pack-prod && electron-builder build --mac",
     "build-linux": "npm run pack-prod && electron-builder build --linux",
     "start": "electron ."

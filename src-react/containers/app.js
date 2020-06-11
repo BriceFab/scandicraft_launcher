@@ -29,11 +29,13 @@ class App extends Component {
     componentDidMount() {
         ipcRenderer.on(CONFIG_IPC.UNCAUGHT_EXCEPTION, this.uncaughtExceptionOnMain.bind(this))
         ipcRenderer.on(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, this.checkForUpdate.bind(this));
+        ipcRenderer.on(CONFIG_IPC.APP_UPDATE.UPDATE_FINISH, this.onUpdateFinish.bind(this));
     }
 
     componentWillUnmount() {
         ipcRenderer.removeListener(CONFIG_IPC.UNCAUGHT_EXCEPTION, this.uncaughtExceptionOnMain.bind(this));
         ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.CHECK_FOR_UPDATE, this.checkForUpdate.bind(this));
+        ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.UPDATE_FINISH, this.onUpdateFinish.bind(this));
     }
 
     uncaughtExceptionOnMain(event, error) {
@@ -42,6 +44,10 @@ class App extends Component {
 
     checkForUpdate(event, data) {
         this.changeUpdateState(true);
+    }
+
+    onUpdateFinish(event, data) {
+        this.changeUpdateState(false);
     }
 
     changeUpdateState(isChecking) {
