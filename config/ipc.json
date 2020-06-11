@@ -10,7 +10,6 @@
         "DOWLOAD_PROGRESS": "app_update_download_progress",
         "UPDATE_DOWLOADED": "app_update_downloaded",
         "UPDATE_CANCELLED": "app_update_cancelled",
-        "LOGIN": "app_update_login",
         "ERROR": "app_update_error"
     }
 }

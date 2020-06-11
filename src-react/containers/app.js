@@ -54,9 +54,9 @@ class App extends Component {
         const { isCheckingUpdate } = this.state;
 
         let app_component = <Routes />
-        // if (isCheckingUpdate) {
-        //     app_component = <AppUpdate changeUpdateState={this.changeUpdateState.bind(this)} />
-        // }
+        if (isCheckingUpdate) {
+            app_component = <AppUpdate changeUpdateState={this.changeUpdateState.bind(this)} />
+        }
 
         return (
             <Suspense fallback={<Typography component={'h1'}>Chargement..</Typography>}>

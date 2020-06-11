@@ -1,25 +1,25 @@
 {
   "name": "scandicraft_launcher",
-  "version": "1.0.4",
+  "version": "1.0.2",
   "description": "ScandiCraft Launcher",
   "main": "./dist/electron.bundle.js",
   "scripts": {
     "pack-dev": "npx webpack --config ./config/webpack/webpack.dev.js",
     "pack-prod": "npx webpack --config ./config/webpack/webpack.prod.js",
-    "build-win64": "npm run pack-prod && electron-builder build --win --x64",
+    "build-win64": "npm run pack-prod && electron-builder build --win --x64 --ia32",
     "build-win32": "npm run pack-prod && electron-builder build --win --x32",
     "build-mac": "npm run pack-prod && electron-builder build --mac",
     "build-linux": "npm run pack-prod && electron-builder build --linux",
     "start": "electron ."
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-react": "^7.9.4",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
-    "electron": "^8.3.0",
-    "electron-builder": "^22.6.0",
+    "electron": "^8.3.1",
+    "electron-builder": "^22.7.0",
     "electron-devtools-installer": "^3.0.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
@@ -96,12 +96,20 @@
       "category": "Game"
     },
     "nsis": {
-      "perMachine": true
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
+      "shortcutName": "ScandiCraft"
     },
     "directories": {
       "buildResources": "resources",
       "output": "build"
     },
+    "compression": "maximum",
+    "asar": true,
     "publish": [
       {
         "provider": "generic",

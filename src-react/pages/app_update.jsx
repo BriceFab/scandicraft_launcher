@@ -26,7 +26,6 @@ class AppUpdate extends Component {
         ipcRenderer.on(CONFIG_IPC.APP_UPDATE.DOWLOAD_PROGRESS, this.onDownloadProgress.bind(this));
         ipcRenderer.on(CONFIG_IPC.APP_UPDATE.UPDATE_DOWLOADED, this.updateDownloaded.bind(this));
         ipcRenderer.on(CONFIG_IPC.APP_UPDATE.UPDATE_CANCELLED, this.updateCancelled.bind(this));
-        ipcRenderer.on(CONFIG_IPC.APP_UPDATE.LOGIN, this.onLogin.bind(this));
     }
 
     componentWillUnmount() {
@@ -36,7 +35,6 @@ class AppUpdate extends Component {
         ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.DOWLOAD_PROGRESS, this.onDownloadProgress.bind(this));
         ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.UPDATE_DOWLOADED, this.updateDownloaded.bind(this));
         ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.UPDATE_CANCELLED, this.updateCancelled.bind(this));
-        ipcRenderer.removeListener(CONFIG_IPC.APP_UPDATE.LOGIN, this.onLogin.bind(this));
     }
 
     onError(event, error) {
@@ -67,11 +65,6 @@ class AppUpdate extends Component {
     updateCancelled(event, info) {
         console.info('Update cancelled', info)
         toast.info('Update cancelled')
-    }
-
-    onLogin(event, info) {
-        console.info('Update login', info)
-        toast.info('Update login')
     }
 
     render() {

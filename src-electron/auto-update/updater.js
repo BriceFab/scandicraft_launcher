@@ -16,7 +16,8 @@ export default class AppUpdater {
     }
 
     checkUpdate() {
-        autoUpdater.checkForUpdatesAndNotify();
+        autoUpdater.checkForUpdates();
+        // autoUpdater.checkForUpdatesAndNotify();
 
         //Send to front
         // console.log('fake check-for-update')
@@ -61,18 +62,15 @@ export default class AppUpdater {
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_DOWLOADED, info);
+
+            //Quit and install
+            autoUpdater.quitAndInstall();
         })
         autoUpdater.on('update-cancelled', (info) => {
             console.log('BriceFab auto-update update-cancelled', info);
 
             //Send to front
             this.mainWindow.send(CONFIG_IPC.APP_UPDATE.UPDATE_CANCELLED, info);
-        })
-        autoUpdater.on('login', (info) => {
-            console.log('BriceFab auto-update login', info);
-
-            //Send to front
-            this.mainWindow.send(CONFIG_IPC.APP_UPDATE.LOGIN, info);
         })
     }
 }
