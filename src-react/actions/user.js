@@ -1,9 +1,9 @@
 import { ACTIONS } from "./actions_types";
-import routes from '../routes/routes.json';
 import { axiosPost } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { toast } from "react-toastify";
 import { store, storeSet } from '../../common/services/store';
+const { getCurrentWindow } = require('electron').remote;
 
 export const setToken = (token) => (dispatch) => {
     dispatch({
@@ -56,7 +56,6 @@ export const login = (user) => dispatch => {
 
 
         if (user.remember && JSON.parse(user.remember) === true) {
-            console.log('storage set remember me', JSON.stringify(true))
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY, true)
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_USERNAME, user.username.toString())
             storeSet(CONFIG.STORAGE.REMEMBER_ME.KEY_PASSWORD, user.password.toString())
@@ -70,7 +69,7 @@ export const login = (user) => dispatch => {
     }, (error) => {
         dispatch({
             type: ACTIONS.API.ERROR,
-            payload: error.data
+            payload: error
         });
     })
 };
@@ -82,13 +81,9 @@ export const logout = () => dispatch => {
 };
 
 export const token_expired = () => {
-    store.delete(CONFIG.STORAGE.TOKEN);
-    toast.error('Votre session a expiré', {
-        onClose: () => {
-            window.location.href = routes.LOGIN;
-            // window.location.reload(true);
-        }
-    });
+    store.delete(CONFIG.STORAGE.KEY_TOKEN);
+    store.set(CONFIG.STORAGE.TOKEN_EXPIRED, true);
+    getCurrentWindow().reload();
 };
 
 // export const GET_USER = 'GET_USER';

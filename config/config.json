@@ -3,6 +3,7 @@
     "STORAGE": {
         "KEY": "T8x+R*6bR6dcAt{/[n6g$3v/2M)J3D6W",
         "KEY_TOKEN": "user_token",
+        "TOKEN_EXPIRED": "token_expired",
         "REMEMBER_ME": {
             "KEY": "remember_me",
             "KEY_USERNAME": "user_name",

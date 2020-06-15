@@ -3,6 +3,7 @@ import CONFIG from '../../config/config.json';
 import { token_expired } from '../../src-react/actions/user';
 import hasExpired from './token';
 import { storeGet } from '../../common/services/store';
+import { toast } from 'react-toastify';
 
 let instance = axios.create({
     baseURL: CONFIG.API.ENTRY_POINT,
@@ -58,6 +59,10 @@ instance.interceptors.response.use((response) => {
         return Promise.reject(response);
     }
 }, (error) => {
+    // if (error.message.includes('Network Error')) {
+    //     toast.error('Vous n\'avez pas de connexion internet..');
+    // }
+
     return Promise.reject(error);
 });
 

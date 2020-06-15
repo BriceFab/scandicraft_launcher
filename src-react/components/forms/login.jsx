@@ -29,12 +29,12 @@ class LoginForm extends Component {
             waiting: true
         })
         this.props.login(props).then((res) => {
-            if (res && res.status === 200) {
-                this.props.history.push(routes.LAUNCHER);
-            }
             this.setState({
                 waiting: false
             })
+            if (res && res.status === 200) {
+                this.props.history.push(routes.LAUNCHER);
+            }
         });
     }
 

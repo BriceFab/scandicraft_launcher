@@ -14,7 +14,6 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case ACTIONS.USER.LOGIN: {
             state.loggedIn = true;
-            console.log('reducer payload', action.payload)
             state.current = action.param;
             // storeSet(config.STORAGE.REMEMBER_ME.KEY_USERNAME, action.payload.user.username);
             // window.location.reload();
@@ -22,7 +21,6 @@ export default function reducer(state = initialState, action) {
         }
         case ACTIONS.USER.SET_TOKEN: {
             const token = action.payload;
-            console.log('set token', token)
             storeSet(CONFIG.STORAGE.KEY_TOKEN, token);
             state.token = token;
             state.loggedIn = true;
@@ -32,7 +30,6 @@ export default function reducer(state = initialState, action) {
                 username: username,
                 roles: decoded.roles
             }
-            console.log('reduce state', state.current)
             toast.success(`Salut ${username ? username : ''} !`);
             return { ...state };
         }

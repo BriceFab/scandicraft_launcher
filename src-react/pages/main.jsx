@@ -107,8 +107,6 @@ class MainPage extends Component {
     }
 
     render() {
-        console.log('render state', this.state)
-
         return (
             <div>
                 <h1>
