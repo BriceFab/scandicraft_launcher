@@ -7,6 +7,7 @@ import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
 import { toast } from 'react-toastify';
 import { logout } from '../actions/user';
+import MainAppBar from '../components/header/appbar';
 
 const styles = theme => ({
     root: {
@@ -109,6 +110,7 @@ class MainPage extends Component {
     render() {
         return (
             <div>
+                <MainAppBar />
                 <h1>
                     Page principale
                 </h1>

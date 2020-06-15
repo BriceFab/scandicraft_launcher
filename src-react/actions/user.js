@@ -3,7 +3,6 @@ import { axiosPost } from "../../common/services/axios";
 import CONFIG from '../../config/config.json';
 import { toast } from "react-toastify";
 import { store, storeSet } from '../../common/services/store';
-const { getCurrentWindow } = require('electron').remote;
 
 export const setToken = (token) => (dispatch) => {
     dispatch({
@@ -83,7 +82,13 @@ export const logout = () => dispatch => {
 export const token_expired = () => {
     store.delete(CONFIG.STORAGE.KEY_TOKEN);
     store.set(CONFIG.STORAGE.TOKEN_EXPIRED, true);
-    getCurrentWindow().reload();
+    try {
+        const { getCurrentWindow } = require('electron').remote;
+        getCurrentWindow().reload();
+    } catch (err) {
+        toast.error('Une erreur est survenue. Votre token a expiré, relancez le launcher !');
+        console.error('cannot reload window', err)
+    }
 };
 
 // export const GET_USER = 'GET_USER';
