@@ -29,15 +29,26 @@ const styles = theme => ({
     root: {
         height: '100vh',
     },
-    image: {
+    background: {
         backgroundImage: `url(${background})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        position: 'absolute',
+        filter: 'blur(2px)',
+        width: '101%',
+        height: '101%',
+        left: '-1%',
+        bottom: '-1%',
+        zIndex: -1,
+    },
+    leftContainer: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'start'
+        alignItems: 'start',
+        position: 'relative',
+        overflow: 'hidden'
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -69,7 +80,8 @@ class LoginPage extends Component {
         return (
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
-                <Grid item xs={5} className={classes.image}>
+                <Grid item xs={5} className={classes.leftContainer}>
+                    <div className={classes.background}></div>
                     <img src={logo} className={classes.logo} />
                 </Grid>
                 <Grid item xs={7} component={Paper} elevation={6} square className={classes.paperGrid}>

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RequireAuth from '../security/require-auth';
-import { withStyles, Button } from "@material-ui/core";
+import { withStyles, Button, Paper } from "@material-ui/core";
 import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
 import { toast } from 'react-toastify';
 import { logout } from '../actions/user';
 import MainAppBar from '../components/header/appbar';
+import HomeInfo from '../components/home_info/info';
 
 const styles = theme => ({
     root: {
@@ -108,19 +109,26 @@ class MainPage extends Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
             <div>
                 <MainAppBar />
-                <h1>
-                    Page principale
-                </h1>
-                <Button onClick={this.onCallLaunch.bind(this)} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
-                    Jouer
-                </Button>
-                {this.renderTask()}
-                <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
-                    Se déconnecter
-                </Button>
+                <HomeInfo />
+                <div>
+                    <Paper elevation={3} style={{ height: '100%', backgroundColor: 'red' }}>
+                        <h1>
+                            Page principale
+            </h1>
+                        <Button onClick={this.onCallLaunch.bind(this)} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
+                            Jouer
+            </Button>
+                        {this.renderTask()}
+                        <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
+                            Se déconnecter
+            </Button>
+                    </Paper>
+                </div>
             </div>
         )
     }
