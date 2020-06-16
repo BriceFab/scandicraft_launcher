@@ -14,6 +14,20 @@ const styles = theme => ({
     root: {
         padding: theme.spacing(4)
     },
+    mainPaper: {
+        height: 'calc(100vh - 314px)',
+        // backgroundColor: 'red',
+        borderRadius: 0
+    },
+    bottomContainer: {
+        bottom: 0,
+        position: 'fixed',
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+        padding: 20,
+        backgroundColor: theme.palette.primary.main
+    }
 });
 
 class MainPage extends Component {
@@ -115,20 +129,17 @@ class MainPage extends Component {
             <div>
                 <MainAppBar />
                 <HomeInfo />
-                <div>
-                    <Paper elevation={3} style={{ height: '100%', backgroundColor: 'red' }}>
-                        <h1>
-                            Page principale
-            </h1>
+                <Paper elevation={3} className={classes.mainPaper}>
+                    <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
+                        Se déconnecter
+                    </Button>
+                    {this.renderTask()}
+                    <div className={classes.bottomContainer}>
                         <Button onClick={this.onCallLaunch.bind(this)} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
                             Jouer
-            </Button>
-                        {this.renderTask()}
-                        <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
-                            Se déconnecter
-            </Button>
-                    </Paper>
-                </div>
+                        </Button>
+                    </div>
+                </Paper>
             </div>
         )
     }
