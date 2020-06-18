@@ -20,7 +20,7 @@ function CircularProgressWithLabel(props) {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Typography variant="caption" component="div" color={"textSecondary"} className={label_class != null ? label_class : null} style={{ fontWeight: 'bold' }}>{`${Math.round(
+                <Typography variant="caption" component="div" color={"textPrimary"} className={label_class != null ? label_class : null} style={{ fontWeight: 'bold' }}>{`${Math.round(
                     props.value,
                 )}%`}</Typography>
             </Box>

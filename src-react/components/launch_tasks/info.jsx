@@ -59,7 +59,7 @@ class LaunchInfo extends Component {
         const { task } = this.props;
 
         let task_name = null;
-        if (task.task_name == 'download' && task.progress && task.progress.percent <= 0) {
+        if (task.task_name == 'download' && (task.progress === undefined || task.progress.percent <= 0)) {
             task_name = i18next.t(`task.${task.task_name}_prepare`)
         } else {
             task_name = i18next.t(`task.${task.task_name}`);
