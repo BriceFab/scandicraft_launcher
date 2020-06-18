@@ -38,8 +38,12 @@ function downloadServerFiles(files) {
                 downloadedBytes += chunk.length;
                 var progress = (downloadedBytes / totalLength) * 100;
 
-                console.log('progress: ', parseInt(progress, 10))
-                updateTaskProgress('download', `${parseInt(progress, 10)}%`)
+                // console.log('progress: ', parseInt(progress, 10))
+                updateTaskProgress('download', {
+                    totalLength: totalLength,
+                    downloadedBytes: downloadedBytes,
+                    percent: parseInt(progress, 10)
+                })
             })
 
             //Enregistre le flux

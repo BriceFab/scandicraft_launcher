@@ -4,6 +4,7 @@ import App from './containers/app';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './store'
+import './services/translate';  //translates
 
 const store = configureStore();
 

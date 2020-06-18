@@ -10,7 +10,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import SettingsIcon from '@material-ui/icons/Settings';
 import MainMenu from './menu';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/user';
+import { bindActionCreators } from 'redux';
 
 const styles = theme => ({
     grow: {
@@ -64,6 +68,14 @@ class MainAppBar extends Component {
         this.menuRef.current.toggleDrawer(true);
     }
 
+    onLogoutClick() {
+        //Close menu
+        this.handleMenuClose();
+
+        //logout
+        this.props.logout();
+    }
+
     render() {
         const { classes } = this.props;
         const { anchorEl } = this.state;
@@ -88,6 +100,9 @@ class MainAppBar extends Component {
                     </Typography>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
+                            <IconButton aria-label="settings" color="inherit">
+                                <SettingsIcon />
+                            </IconButton>
                             <IconButton aria-label="show 1 new notifications" color="inherit">
                                 <Badge badgeContent={1} color="secondary">
                                     <NotificationsIcon />
@@ -117,7 +132,7 @@ class MainAppBar extends Component {
                     onClose={this.handleMenuClose}
                 >
                     <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleMenuClose}>Se déconnecter</MenuItem>
+                    <MenuItem onClick={this.onLogoutClick.bind(this)}>Se déconnecter</MenuItem>
                 </Menu>
 
             </div>
@@ -126,4 +141,19 @@ class MainAppBar extends Component {
 
 }
 
-export default withStyles(styles)(MainAppBar);
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+        {
+            logout
+        },
+        dispatch
+    );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainAppBar));

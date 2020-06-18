@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 200,
-        minHeight: 200,
-        maxHeight: 200,
+        maxWidth: 250,
+        minHeight: 300,
+        maxHeight: 300,
         overflowY: 'scroll'
     },
     bullet: {

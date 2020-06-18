@@ -2,7 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Routes from '../routes/routes';
 import { ToastContainer, toast } from 'react-toastify';
-import { Typography } from '@material-ui/core';
+import { Typography, CssBaseline } from '@material-ui/core';
 import CONFIG_IPC from '../../config/ipc.json';
 import { ipcRenderer } from 'electron';
 import AppUpdate from '../pages/app_update';
@@ -67,6 +67,7 @@ class App extends Component {
         return (
             <Suspense fallback={<Typography component={'h1'}>Chargement..</Typography>}>
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     {app_component}
                 </ThemeProvider>
                 <ToastContainer

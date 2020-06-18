@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function CircularProgressWithLabel(props) {
+    const { label_class } = props;
+
     return (
         <Box position="relative" display="inline-flex">
             <CircularProgress variant="static" {...props} />
@@ -18,7 +20,7 @@ function CircularProgressWithLabel(props) {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Typography variant="caption" component="div" color="textSecondary" style={{fontWeight: 'bold'}}>{`${Math.round(
+                <Typography variant="caption" component="div" color={"textSecondary"} className={label_class != null ? label_class : null} style={{ fontWeight: 'bold' }}>{`${Math.round(
                     props.value,
                 )}%`}</Typography>
             </Box>

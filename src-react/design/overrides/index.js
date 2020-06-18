@@ -27,5 +27,12 @@ export default {
   MuiTab,
   MuiTableCell,
   MuiTableRow,
-  MuiTabs
+  MuiTabs,
+  MuiCssBaseline: {
+    '@global': {
+      body: {
+        overflow: 'hidden',
+      },
+    },
+  },
 };

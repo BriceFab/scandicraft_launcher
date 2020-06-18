@@ -6,19 +6,14 @@ import { withStyles, Button, Paper } from "@material-ui/core";
 import { ipcRenderer } from 'electron';
 import CONFIG_IPC from '../../config/ipc.json';
 import { toast } from 'react-toastify';
-import { logout } from '../actions/user';
 import MainAppBar from '../components/header/appbar';
 import HomeInfo from '../components/home_info/info';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import LaunchInfo from '../components/launch_tasks/info';
+import background from '../../public/assets/images/login_background.png';
+import i18next from 'i18next';
 
 const styles = theme => ({
-    root: {
-        padding: theme.spacing(4)
-    },
-    mainPaper: {
-        height: 'calc(100vh - 314px)',
-        // backgroundColor: 'red',
-        borderRadius: 0
-    },
     bottomContainer: {
         bottom: 0,
         position: 'fixed',
@@ -26,11 +21,37 @@ const styles = theme => ({
         width: '100%',
         justifyContent: 'center',
         padding: 20,
-        backgroundColor: theme.palette.primary.main
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: 'rgb(51, 51, 51, 0.6)'
+        // backgroundColor: theme.palette.primary.main
+    },
+    bntPlay: {
+        width: 300
+    },
+    image: {
+        backgroundImage: `url(${background})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'blur(2px)',
+        width: '102%',
+        left: '-1%',
+        top: '-1%',
+        height: '100%',
+        position: 'absolute',
+        zIndex: -1,
+        overflow: 'hidden'
+    },
+    container: {
+        overflow: 'hidden',
+        position: 'relative',
+        height: '100vh'
     }
 });
 
 class MainPage extends Component {
+
     constructor(props) {
         super(props);
 
@@ -54,12 +75,12 @@ class MainPage extends Component {
 
     catchLaunchError(event, err) {
         const { error } = err;
-        console.log('renderer lauch error', error)
+        console.log('renderer lauch error', err)
 
-        if (error.message && error.code) {
+        if (error && error.message && error.code) {
             toast.error(`${error.message} (code: ${error.code})`)
         } else {
-            toast.error('Une erreure est survenue.. Contactez un membre du staff si l\'erreur persiste');
+            toast.error(i18next.t('error.undefined'));
         }
     }
 
@@ -73,89 +94,40 @@ class MainPage extends Component {
         ipcRenderer.removeListener(CONFIG_IPC.LAUNCH_ERROR, this.catchLaunchError.bind(this));
     }
 
-    renderTask() {
-        const { task } = this.state;
-
-        if (task == null) {
-            return <p>Aucune tâche en cours</p>
-        } else {
-            if (task.active) {
-                return (
-                    <div>
-                        <h3>Tâche en cours:</h3>
-                        <code>
-                            Nom: {task.task_name}<br />
-                            {
-                                this.renderTaskProgress()
-                            }
-                        </code>
-                    </div>
-                )
-            } else {
-                return (
-                    <div>
-                        <h3>Chargement</h3>
-                    </div>
-                )
-            }
-        }
-    }
-
-    renderTaskProgress() {
-        const { task } = this.state;
-
-        if (task.progress) {
-            console.log('progession', task.progress)
-            return (
-                <div>
-                    Progression: {task.progress}
-                </div>
-            )
-        } else {
-            return null
-        }
-    }
-
-    onLogout() {
-        console.log('call logout')
-
-        this.props.logout()
-    }
-
     render() {
         const { classes } = this.props;
+        const { task } = this.state;
 
         return (
             <div>
                 <MainAppBar />
-                <HomeInfo />
-                <Paper elevation={3} className={classes.mainPaper}>
-                    <Button onClick={this.onLogout.bind(this)} size={'small'} color={'primary'} variant={'outlined'} disabled={this.state.task !== null}>
-                        Se déconnecter
-                    </Button>
-                    {this.renderTask()}
-                    <div className={classes.bottomContainer}>
-                        <Button onClick={this.onCallLaunch.bind(this)} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null}>
+                <div className={classes.container}>
+                    <div className={classes.image}></div>
+                    {task ? <LaunchInfo task={task} /> : <HomeInfo />}
+                </div>
+                {this.state.task == null &&
+                    <Paper elevation={20} className={classes.bottomContainer}>
+                        <Button onClick={this.onCallLaunch.bind(this)} className={classes.bntPlay} size={'large'} color={'primary'} variant={'contained'} disabled={this.state.task !== null} startIcon={<SportsEsportsIcon />}>
                             Jouer
-                        </Button>
-                    </div>
-                </Paper>
+                    </Button>
+                    </Paper>
+                }
             </div>
         )
     }
+
 }
 
 function mapStateToProps(state) {
     return {
         user: state.user
-        // counter: state.counter
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            logout
+            // logout
         },
         dispatch
     );
