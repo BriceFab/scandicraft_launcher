@@ -3,7 +3,6 @@ import CONFIG from '../../config/config.json';
 import { token_expired } from '../../src-react/actions/user';
 import hasExpired from './token';
 import { storeGet } from '../../common/services/store';
-import { toast } from 'react-toastify';
 
 let instance = axios.create({
     baseURL: CONFIG.API.ENTRY_POINT,

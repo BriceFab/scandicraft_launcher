@@ -70,7 +70,7 @@ class AppUpdate extends Component {
     onError(event, error) {
         this.setState({
             isDownloading: false,
-            info: 'Update erreur.. Relancez le launcher !'
+            info: 'Update erreur.. Relancez le launcher & vérifiez votre connexion Internet !'
         })
         console.error('Update error', error)
     }

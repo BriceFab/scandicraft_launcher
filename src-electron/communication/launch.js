@@ -4,6 +4,7 @@ import downloadFiles from '../services/download_files';
 import installFiles from '../services/install_files';
 import { launchScandiCraft } from '../services/launch';
 import IPC_CONFIG from '../../config/ipc.json';
+import { checkJava } from "../services/download_java";
 
 let startTaskTime = null;
 
@@ -28,6 +29,11 @@ export async function onCall(event, args) {
         } else {
             console.log('don\'t need to download anything')
         }
+
+        //check java
+        updateStart('java')
+        await checkJava();
+        updateStop('java')
 
         //launch
         updateStart('launch')

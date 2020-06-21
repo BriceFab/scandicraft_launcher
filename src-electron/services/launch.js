@@ -10,7 +10,7 @@ export function launchScandiCraft(user = null) {
 
     const detached = true; //TODO in param
 
-    const launch_scandicraft = spawn(LAUNCHER_CONFIG.JAVA_HOME, args, {
+    const launch_scandicraft = spawn(getJavaExecutable(), args, {
         cwd: LAUNCHER_CONFIG.LAUNCHER_HOME,
         detached: detached,
     });
@@ -39,8 +39,20 @@ function getArgs(user) {
         "-XX:+UseConcMarkSweepGC",
         "-XX:+CMSIncrementalMode",  //check this
         "-XX:-UseAdaptiveSizePolicy",
-        "-Xms1024M",
-        "-Xmx1024M",
+
+        //TODO tester:
+        // '-XX:+UnlockExperimentalVMOptions',
+        // '-XX:+UseG1GC',
+        // '-XX:G1NewSizePercent=20',
+        // '-XX:G1ReservePercent=20',
+        // '-XX:MaxGCPauseMillis=50',
+        // '-XX:G1HeapRegionSize=16M',
+        // '-XX:+DisableAttachMechanism',
+        // '-Dcom.ibm.tools.attach.enable=no',
+
+        "-Xms1024M",    //min
+        "-Xmx1024M",    //max
+        // '-Xmn128M',
         "-cp"
     ];
 
@@ -80,3 +92,36 @@ function getArgs(user) {
 
     return args;
 }
+
+function getJavaExecutable() {
+    const java_re_path = storeGet(CONFIG.STORAGE.JRE_PATH);
+    switch (process.platform) {
+        case "win32":
+            return path.join(java_re_path, 'bin', 'javaw.exe');
+        case "darwin":
+            return path.join(java_re_path, 'Contents', 'Home', 'bin', 'java');
+        case "linux":
+            return path.join(java_re_path, 'bin', 'java');
+        default:
+            console.error('platform not implemented')
+            break;
+    }
+}
+
+//     /**
+//      * Returns the path of the OS-specific executable for the given Java
+//      * installation. Supported OS's are win32, darwin, linux.
+//      * 
+//      * @param {string} rootDir The root directory of the Java installation.
+//      * @returns {string} The path to the Java executable.
+//      */
+//     static javaExecFromRoot(rootDir){
+//     if (process.platform === 'win32') {
+//         return path.join(rootDir, 'bin', 'javaw.exe')
+//     } else if (process.platform === 'darwin') {
+//         return path.join(rootDir, 'Contents', 'Home', 'bin', 'java')
+//     } else if (process.platform === 'linux') {
+//         return path.join(rootDir, 'bin', 'java')
+//     }
+//     return rootDir
+// }

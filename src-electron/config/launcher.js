@@ -3,9 +3,9 @@ import { name } from '../../package.json';
 // const findJavaHome = require('find-java-home')
 
 export const LAUNCHER_CONFIG = {
-    JAVA_HOME: 'java',
     LAUNCHER_HOME: app.getPath('userData').replace(name, '.ScandiCraft'),
     TEMP_DOWNLOAD_FILE: 'scandicraft_download.zip',
+    TEMP_DOWNLOAD_JAVA_FILE: 'scandicraft_java.zip',
     LIBRARIES_DIR: 'libraries',
     NATIVES_DIR: 'natives',
     ASSETS_DIR: 'assets',

@@ -2,7 +2,12 @@
     "task": {
         "scan": "Analyse des fichiers",
         "download_prepare": "Préparation en cours",
-        "download": "Téléchargement en cours"
+        "download": "Téléchargement en cours",
+        "java_download": "Téléchargement de java",
+        "java": "Installation de java",
+        "install": "Installation des fichiers",
+        "install_java": "Installation de java",
+        "launch": "Lancement de ScandiCraft"
     },
     "error": {
         "undefined": "Une erreur est survenue.. Vérifiez votre connexion Internet. Contactez un membre du staff si l'erreur persiste !"
