@@ -1,6 +1,6 @@
 {
   "name": "scandicraft_launcher",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "ScandiCraft Launcher",
   "main": "./dist/electron.bundle.js",
   "scripts": {
